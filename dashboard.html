@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Inventory</title>
+    <link rel="icon" type="image/x-icon" href="src/icon/farmfresh.png" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="src/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="row container-fluid">
+      <div class="aside mt-5 col-sm-3">
+        <div class="side-heading">Manage Inventory</div>
+        <div class="list-div" style="display: grid; place-items: center">
+          <ul class="p-2">
+            <li class="pt-2"><p>Dashboard</p></li>
+            <li class="pt-2"><p>Inventory</p></li>
+            <li class="pt-2"><p>Products</p></li>
+          </ul>
+        </div>
+        <div class="btn-add">
+          <button id="add_product">Add Product</button>
+        </div>
+        <div class="btn-add">
+          <button id="update_product">Update Product</button>
+        </div>
+      </div>
+      <div class="mainContainer mt-3 col-sm-9 p-2">
+        <h1 class="p-2">Inventory</h1>
+        <div class="search container-fluid">
+          <input
+            type="search"
+            placeholder="search products"
+            name="search"
+            id="search"
+          />
+        </div>
+        <hr />
+        <div
+          id="itemList"
+          class="productContainer container-fluid mt-5 p-2"
+        ></div>
+      </div>
+    </div>
+
+    <div id="popWindow" class="popup">
+      <div id="clbtn" class="cls_btn">X</div>
+      <div id="popUpContainer" class="popContainer container-fluid bg-white">
+        <div class="pb-3"><h5>Add Product</h5></div>
+        <div class="list_product_input">
+          <div>
+            <label class="p-3" for="name">Product Name : </label>
+            <input class="nInput" type="text" id="name" name="name" value="" />
+          </div>
+
+          <div>
+            <label class="p-3" for="stock">Opening Stock : </label>
+            <input type="number" id="stock" name="stock" value="0" />
+          </div>
+        </div>
+        <div>
+          <div id="btn-item" class="btn-item">
+            <button id="">Add Item</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div id="popWindowForEdit_items" style="display: grid" class="popup">
+      <div id="clbtn" class="cls_btn">X</div>
+      <div id="popUpContainer" class="popContainer container-fluid bg-white">
+        <div><h5 class="pb-3">Update Product</h5></div>
+        <div class="list_product_input">
+          <div>
+            <label class="p-3" for="name">Product Name : </label>
+            <input class="nInput" type="text" id="name" name="name" value="" />
+          </div>
+
+          <div>
+            <label class="p-3" for="stock">Opening Stock : </label>
+            <input type="number" id="stock" name="stock" value="0" />
+          </div>
+        </div>
+        <div>
+          <div class="btn-item">
+            <button id="">Add Item</button>
+          </div>
+        </div>
+      </div>
+    </div>-->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const add_item = document.getElementById("btn-item");
+      add_item.addEventListener("click", () => {
+        const stockInput = document.getElementById("stock");
+        const nameInput = document.getElementById("name");
+
+        // Get the value of the input
+        const nameValue = nameInput.value;
+        const stockValue = stockInput.value;
+
+        // Prepare the data to be sent
+        const data = {
+          item: nameValue,
+          stock: stockValue,
+        };
+
+        // Make a POST request to your API
+        fetch("https://inventorymanaging.000webhostapp.com/add.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((responseData) => {
+            // Handle the response from the server
+            console.log(responseData);
+          })
+          .catch((error) => {
+            // Handle errors
+            console.error("Error:", error);
+          });
+      });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Function to fetch item data from the server
+        function fetchItemData() {
+          fetch("https://inventorymanaging.000webhostapp.com/get.php", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => displayItemList(data))
+            .catch((error) => console.error("Error:", error));
+        }
+
+        // Function to display the list of items
+        function displayItemList(response) {
+          const itemListContainer = document.getElementById("itemList");
+
+          // Clear previous content
+          itemListContainer.innerHTML = "";
+
+          // Check if response has a 'data' property containing an array
+          if (response && response.data && Array.isArray(response.data)) {
+            // Create a list element and append items
+            const itemList = document.createElement("ul");
+
+            response.data.forEach((item) => {
+              const itemDiv = document.createElement("div");
+              itemDiv.classList.add(
+                "item",
+                "d-flex",
+                "flex-wrap",
+                "flex-row",
+                "m-2",
+                "justify-content-around",
+                "align-content-center",
+                "p-3",
+                "bg-body-primary",
+                "m-3"
+              );
+
+              // Add an onClick listener to each itemDiv
+              itemDiv.addEventListener("click", () => {
+                // You can perform actions when an item is clicked
+                console.log(`Item clicked: ${JSON.stringify(item)}`);
+              });
+
+              // Create divs for the properties you want to display
+              const nameDiv = document.createElement("div");
+              nameDiv.classList.add("name");
+              nameDiv.textContent = "Name : " + item.name;
+
+              const itemCodeDiv = document.createElement("div");
+              itemCodeDiv.classList.add("itemCode");
+              itemCodeDiv.textContent = "Item Code : " + item.itemCode;
+
+              const cStockDiv = document.createElement("div");
+              cStockDiv.classList.add("cStock");
+              cStockDiv.textContent = "Stock : " + item.cStock;
+
+              const skuDiv = document.createElement("div");
+              skuDiv.classList.add("sku");
+              skuDiv.textContent = "SKU : " + item.sku;
+
+              // Append the property divs to the item div
+              itemDiv.appendChild(nameDiv);
+              itemDiv.appendChild(itemCodeDiv);
+              itemDiv.appendChild(skuDiv);
+              itemDiv.appendChild(cStockDiv);
+              /*Object.keys(item).forEach((key) => {
+                // Create a div for each property
+                const propertyDiv = document.createElement("div");
+                propertyDiv.classList.add(key);
+                propertyDiv.textContent = item[key];
+
+                // Append the property div to the item div
+                itemDiv.appendChild(propertyDiv);
+              });*/
+              // Append the item div to the itemListContainer
+              itemListContainer.appendChild(itemDiv);
+            });
+          } else {
+            // Handle the case where 'data' is not an array (log or display an error message)
+            console.error(
+              "Invalid or unexpected response from the server:",
+              response
+            );
+          }
+        }
+
+        // Call the function to fetch item data
+        fetchItemData();
+      });
+    </script>
+
+    <script>
+      const close_btn = document.getElementById("clbtn");
+      const popWindow = document.getElementById("popWindow");
+      const add_product = document.getElementById("add_product");
+      const update_product = document.getElementById("update_product");
+      const popUpContainer = document.getElementById("popUpContainer");
+
+      // Flag to track whether the click happened inside or outside the popUpContainer
+      let insideContainer = false;
+
+      popUpContainer.addEventListener("click", () => {
+        console.log("Clicked inside the popUpContainer");
+        insideContainer = true;
+        // You can add additional logic if needed
+      });
+
+      close_btn.addEventListener("click", () => {
+        console.log("Clicked");
+        // Check the flag to determine the click location
+        if (insideContainer) {
+          console.log("Clicked inside, not hiding popWindow");
+          insideContainer = false; // Reset the flag
+        } else {
+          console.log("Clicked outside, hiding popWindow");
+          popWindow.style.display = "none";
+        }
+      });
+
+      popWindow.addEventListener("click", () => {
+        console.log("Clicked");
+        // Check the flag to determine the click location
+        if (insideContainer) {
+          console.log("Clicked inside");
+          insideContainer = false; // Reset the flag
+        } else {
+          console.log("Clicked outside");
+          popWindow.style.display = "none";
+        }
+      });
+
+      add_product.addEventListener("click", () => {
+        popWindow.style.display = "grid";
+      });
+    </script>
+  </body>
+</html>
