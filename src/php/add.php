@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json; charset=utf-8');
+header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *'); // Allow requests from any origin
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -20,30 +20,34 @@ if (!$conn) {
         $data = json_decode(file_get_contents("php://input"), true);
 
         // Validate and sanitize the data (replace this with your validation logic)
+        $number = isset($data['number']) ? mysqli_real_escape_string($conn, $data['number']) : null;
         $item = isset($data['item']) ? mysqli_real_escape_string($conn, $data['item']) : null;
+        $code = isset($data['code']) ? mysqli_real_escape_string($conn, $data['code']) : null;
         $stock = isset($data['stock']) ? mysqli_real_escape_string($conn, $data['stock']) : null;
-        $id = isset($data['id']) ? mysqli_real_escape_string($conn, $data['id']) : null;
 
         // Check if all required fields are present
-        if ($item !== null && $stock !== null && $id !== null) {
-            // Prepare and bind the statement for updating
-            $query = "UPDATE items SET name = ?, cStock = ? WHERE id = ?";
+        if ($number !== null && $item !== null && $code !== null && $stock !== null) {
+
+
+            // Prepare and bind the statement for insertion
+            $query = "INSERT INTO items (number, name, code, stock) VALUES (?, ?, ?, ?)";
             $stmt = mysqli_prepare($conn, $query);
 
-
-            $id = (int) $id;
-
+            // Assuming 'number' is an integer, adjust the data type accordingly
+            $number = (int) $number;
 
             // Bind parameters
-            mysqli_stmt_bind_param($stmt, "sii", $item, $stock, $id);
+            mysqli_stmt_bind_param($stmt, "issi", $number, $item, $code, $stock);
 
             // Execute the statement
             $result = mysqli_stmt_execute($stmt);
 
+
+
             if ($result) {
-                $response = ['message' => 'Item updated successfully'];
+                $response = ['message' => 'New item added successfully'];
             } else {
-                $response = ['error' => 'Error updating item in the database'];
+                $response = ['error' => 'Error adding new item to the database'];
             }
 
             // Close the statement
@@ -57,6 +61,6 @@ if (!$conn) {
     }
 }
 
-echo json_encode($response, JSON_UNESCAPED_UNICODE);
+echo json_encode($response);
 exit;
 ?>

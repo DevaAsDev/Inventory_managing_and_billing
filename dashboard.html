@@ -15,6 +15,10 @@
   </head>
   <body>
     <div class="row container-fluid">
+      <div
+        id="liveAlertPlaceholder"
+        style="position: absolute; top: 0px; right: 0; z-index: 4; float: left"
+      ></div>
       <div class="aside mt-5 col-sm-3">
         <div class="side-heading">Manage Inventory</div>
         <div class="list-div" style="display: grid; place-items: center">
@@ -50,8 +54,8 @@
     </div>
 
     <div id="popWindow" class="popup">
-      <div id="clbtn" class="cls_btn">X</div>
       <div id="popUpContainer" class="popContainer container-fluid bg-white">
+        <div id="clbtn" class="cls_btn">X</div>
         <div class="pb-3"><h5>Add Product</h5></div>
         <div class="list_product_input">
           <div>
@@ -65,35 +69,38 @@
           </div>
         </div>
         <div>
-          <div id="btn-item" class="btn-item">
+          <div id="btn-item" class="btn-item m-1">
             <button id="">Add Item</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- <div id="popWindowForEdit_items" style="display: grid" class="popup">
-      <div id="clbtn" class="cls_btn">X</div>
-      <div id="popUpContainer" class="popContainer container-fluid bg-white">
+    <div id="popWindowForEdit_items" class="popup">
+      <div
+        id="popUpContainer_edit"
+        class="popContainer container-fluid bg-white"
+      >
+        <div id="clbtn_edit" class="cls_btn">X</div>
         <div><h5 class="pb-3">Update Product</h5></div>
         <div class="list_product_input">
           <div>
             <label class="p-3" for="name">Product Name : </label>
-            <input class="nInput" type="text" id="name" name="name" value="" />
+            <input class="Input" type="text" id="xname" name="name" value="" />
           </div>
 
           <div>
             <label class="p-3" for="stock">Opening Stock : </label>
-            <input type="number" id="stock" name="stock" value="0" />
+            <input type="number" id="xstock" name="stock" value="0" />
           </div>
         </div>
         <div>
-          <div class="btn-item">
-            <button id="">Add Item</button>
+          <div id="btn_add" class="btn-item">
+            <button id="">Update Item</button>
           </div>
         </div>
       </div>
-    </div>-->
+    </div>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
@@ -101,10 +108,32 @@
       crossorigin="anonymous"
     ></script>
     <script>
+      const alertPlaceholder = document.getElementById("liveAlertPlaceholder");
+      const appendAlert = (message, type) => {
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = [
+          `<div class="alert m-3 alert-${type} alert-dismissible" role="alert">`,
+          `   <div>${message}</div>`,
+          '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+          "</div>",
+        ].join("");
+
+        alertPlaceholder.append(wrapper);
+      };
+    </script>
+    <script>
+      const update_btn = document.getElementById("update_product");
+      update_btn.addEventListener("click", () => {
+        appendAlert("Double-click on the item to update it.", "primary");
+      });
+    </script>
+
+    <script>
       const add_item = document.getElementById("btn-item");
       add_item.addEventListener("click", () => {
         const stockInput = document.getElementById("stock");
         const nameInput = document.getElementById("name");
+        const popWindow = document.getElementById("popWindow");
 
         // Get the value of the input
         const nameValue = nameInput.value;
@@ -128,10 +157,16 @@
           .then((responseData) => {
             // Handle the response from the server
             console.log(responseData);
+            appendAlert("Item Added!", "success");
+            popWindow.style.display = "none";
           })
           .catch((error) => {
             // Handle errors
             console.error("Error:", error);
+            appendAlert(
+              "Faile to add item to database!. Check the network.",
+              "danger"
+            );
           });
       });
     </script>
@@ -182,7 +217,67 @@
               itemDiv.addEventListener("click", () => {
                 // You can perform actions when an item is clicked
                 console.log(`Item clicked: ${JSON.stringify(item)}`);
+                popWindow_edit.style.display = "grid";
+                const update_item = document.getElementById("btn_add");
+                const xName = document.getElementById("xname");
+                const xStock = document.getElementById("xstock");
+
+                xName.value = item.name;
+                xStock.value = item.cStock;
+                const xId = item.id;
+
+                update_item.addEventListener("click", () => {
+                  const nameValues = xName.value;
+                  const stockValues = xStock.value;
+
+                  // Prepare the data to be sent
+                  const data1 = {
+                    item: nameValues,
+                    stock: stockValues,
+                    id: parseInt(xId),
+                  };
+
+                  console.log(nameValues);
+                  console.log(stockValues);
+                  console.log(xId);
+
+                  // Make a POST request to your API
+                  fetch(
+                    "https://inventorymanaging.000webhostapp.com/update.php",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify(data1),
+                    }
+                  )
+                    .then((response) => response.json())
+                    .then((responseData) => {
+                      // Handle the response from the server
+                      console.log(responseData);
+                      appendAlert("Item Added!", "success");
+                      popWindow_edit.style.display = "none";
+                    })
+                    .catch((error) => {
+                      // Handle errors
+                      console.error("Error:", error);
+                      appendAlert(
+                        "Faile to add item to database!. Check the network.",
+                        "danger"
+                      );
+                    });
+                });
               });
+
+              // Add a double-click event listener to each itemDiv
+              /*itemDiv.addEventListener("dblclick", () => {
+                // You can perform actions when an item is double-clicked
+                console.log(`Item double-clicked: ${JSON.stringify(item)}`);
+                console.log(
+                  `Item double-clicked: ${JSON.stringify(item.name)}`
+                );
+              });*/
 
               // Create divs for the properties you want to display
               const nameDiv = document.createElement("div");
@@ -206,15 +301,7 @@
               itemDiv.appendChild(itemCodeDiv);
               itemDiv.appendChild(skuDiv);
               itemDiv.appendChild(cStockDiv);
-              /*Object.keys(item).forEach((key) => {
-                // Create a div for each property
-                const propertyDiv = document.createElement("div");
-                propertyDiv.classList.add(key);
-                propertyDiv.textContent = item[key];
 
-                // Append the property div to the item div
-                itemDiv.appendChild(propertyDiv);
-              });*/
               // Append the item div to the itemListContainer
               itemListContainer.appendChild(itemDiv);
             });
@@ -236,44 +323,70 @@
       const close_btn = document.getElementById("clbtn");
       const popWindow = document.getElementById("popWindow");
       const add_product = document.getElementById("add_product");
-      const update_product = document.getElementById("update_product");
       const popUpContainer = document.getElementById("popUpContainer");
 
       // Flag to track whether the click happened inside or outside the popUpContainer
       let insideContainer = false;
 
       popUpContainer.addEventListener("click", () => {
-        console.log("Clicked inside the popUpContainer");
         insideContainer = true;
         // You can add additional logic if needed
       });
 
       close_btn.addEventListener("click", () => {
-        console.log("Clicked");
         // Check the flag to determine the click location
         if (insideContainer) {
-          console.log("Clicked inside, not hiding popWindow");
           insideContainer = false; // Reset the flag
         } else {
-          console.log("Clicked outside, hiding popWindow");
           popWindow.style.display = "none";
         }
       });
 
       popWindow.addEventListener("click", () => {
-        console.log("Clicked");
         // Check the flag to determine the click location
         if (insideContainer) {
-          console.log("Clicked inside");
           insideContainer = false; // Reset the flag
         } else {
-          console.log("Clicked outside");
           popWindow.style.display = "none";
         }
       });
 
       add_product.addEventListener("click", () => {
         popWindow.style.display = "grid";
+      });
+    </script>
+
+    <script>
+      const close_edit = document.getElementById("clbtn_edit");
+      const popWindow_edit = document.getElementById("popWindowForEdit_items");
+      const popUpContainer_edit = document.getElementById(
+        "popUpContainer_edit"
+      );
+
+      // Flag to track whether the click happened inside or outside the popUpContainer
+      let insideContainer_for_editor = false;
+
+      popUpContainer_edit.addEventListener("click", () => {
+        insideContainer_for_editor = true;
+        // You can add additional logic if needed
+      });
+
+      close_edit.addEventListener("click", () => {
+        // Check the flag to determine the click location
+        if (insideContainer_for_editor) {
+          insideContainer_for_editor = false; // Reset the flag
+        } else {
+          popWindow_edit.style.display = "none";
+        }
+      });
+
+      popWindow_edit.addEventListener("click", () => {
+        // Check the flag to determine the click location
+        if (insideContainer_for_editor) {
+          insideContainer_for_editor = false; // Reset the flag
+        } else {
+          popWindow_edit.style.display = "none";
+        }
       });
     </script>
   </body>
