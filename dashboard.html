@@ -12,6 +12,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="src/css/dashboard.css" />
+    <link rel="stylesheet" href="src/css/stock.css" />
   </head>
   <body>
     <div class="row container-fluid">
@@ -49,7 +50,13 @@
           <button id="add_product">Add Product</button>
         </div>
         <div class="btn-add">
-          <button id="update_product">Update Product</button>
+          <button id="update_product" class="bg-danger">Update Product</button>
+        </div>
+        <div class="btn-add">
+          <button id="update_product">Receiving Stock</button>
+        </div>
+        <div class="btn-add">
+          <button id="update_product">Issuing Stock</button>
         </div>
       </div>
       <div id="mainContainer" class="mainContainer mt-3 col-sm-9 p-2">
@@ -69,7 +76,22 @@
         ></div>
       </div>
       <!--div for stock -->
-      <div id="stock_container" class="mainContainer mt-3 col-sm-9 p-2"></div>
+      <div
+        id="stock_container"
+        style="display: none"
+        class="stock_container mt-3 col-sm-9 p-2"
+      >
+        <h1 class="p-2 btn-item">Receiving Stocks</h1>
+        <div class="search container-fluid">
+          <input
+            type="search"
+            placeholder="search products"
+            name="search"
+            id="search"
+          />
+        </div>
+        <hr />
+      </div>
     </div>
 
     <div id="popWindow" class="popup">
@@ -131,7 +153,7 @@
     <script>
       const update_btn = document.getElementById("update_product");
       update_btn.addEventListener("click", () => {
-        appendAlert("Click on the item to update it.", "primary");
+        appendAlert("Require admin privileges  ", "warning");
       });
     </script>
 
