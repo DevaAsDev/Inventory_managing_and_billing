@@ -164,18 +164,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const reject_btn = document.getElementById("reject_btn");
       reject_btn.addEventListener("click", () => {
-        popWindow_receive.style.display = "none";
-        cId = null;
-        cName = "";
-        cStock = null;
-        isSelected = false;
-        document.querySelectorAll(".item").forEach((el) => {
-          el.classList.remove("activated");
-        });
+        const mStock = document.getElementById("mStock");
+        const stockValues = mStock.value;
 
         const stock_data = {
-          item: nameValue,
-          stock: stockValue,
+          id: cId,
+          stock: stockValues,
+          previous: cStock,
         };
 
         // Make a POST request to your API
@@ -193,6 +188,15 @@ document.addEventListener("DOMContentLoaded", function () {
             appendAlert("Item Added!", "success");
             popWindow.style.display = "none";
             fetchItemData();
+
+            popWindow_receive.style.display = "none";
+            cId = null;
+            cName = "";
+            cStock = null;
+            isSelected = false;
+            document.querySelectorAll(".item").forEach((el) => {
+              el.classList.remove("activated");
+            });
           })
           .catch((error) => {
             // Handle errors
