@@ -13,6 +13,7 @@
     />
     <link rel="stylesheet" href="src/css/dashboard.css" />
     <link rel="stylesheet" href="src/css/stock.css" />
+    <link rel="stylesheet" href="src/css/popupwindow.css" />
   </head>
   <body>
     <div class="row container-fluid">
@@ -53,10 +54,10 @@
           <button id="update_product" class="bg-danger">Update Product</button>
         </div>
         <div class="btn-add">
-          <button id="update_product">Receiving Stock</button>
+          <button id="receive_product">Receiving Stock</button>
         </div>
         <div class="btn-add">
-          <button id="update_product">Issuing Stock</button>
+          <button id="issuing_product">Issuing Stock</button>
         </div>
       </div>
       <div id="mainContainer" class="mainContainer mt-3 col-sm-9 p-2">
@@ -138,6 +139,43 @@
         <div>
           <div id="btn_add" class="btn-item">
             <button id="">Update Item</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="popWindow_receive_stock" class="popup">
+      <div
+        id="popUpContainer_receive"
+        class="popContainer container-fluid bg-white"
+      >
+        <div id="clbtn_receive" class="cls_btn">X</div>
+        <div><h5 class="pb-3">Receive Stock</h5></div>
+        <div class="list_product_input">
+          <div>
+            <label class="p-3" for="name">Product Name : </label>
+            <input
+              class="Input"
+              disabled
+              type="text"
+              id="mName"
+              name="mName"
+              value=""
+              style="border: 0; background-color: white"
+            />
+          </div>
+
+          <div>
+            <label class="p-3" for="stock">Opening Stock : </label>
+            <input type="number" id="mStock" name="stock" value="0" />
+          </div>
+        </div>
+        <div style="width: 100%; display: flex; justify-content: end">
+          <div id="reject_btn" class="btn-item">
+            <button id="">Reject</button>
+          </div>
+          <div id="receive_stock" class="btn-item">
+            <button id="">Receive Stock</button>
           </div>
         </div>
       </div>

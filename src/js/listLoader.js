@@ -12,15 +12,17 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => console.error("Error:", error));
   }
 
+  let cName = "";
+  let cStock = null;
+  let cId = null;
+  let isSelected = false;
+
   // Function to display the list of items
   function displayItemList(response) {
     const itemListContainer = document.getElementById("itemList");
 
     // Clear previous content
     itemListContainer.innerHTML = "";
-    const cName = "";
-    const cStock = null;
-    const cId = null;
 
     // Check if response has a 'data' property containing an array
     if (response && response.data && Array.isArray(response.data)) {
@@ -50,16 +52,18 @@ document.addEventListener("DOMContentLoaded", function () {
           // Add "active" class to the clicked item
           itemDiv.classList.add("activated");
 
+          //global declaration
+          cName = item.name;
+          cStock = item.cSock;
+          cId = item.id;
+          isSelected = true;
+
+          /*
           console.log(`Item clicked: ${JSON.stringify(item)}`);
           popWindow_edit.style.display = "grid";
           const update_item = document.getElementById("btn_add");
           const xName = document.getElementById("xname");
           const xStock = document.getElementById("xstock");
-
-          //global declaration
-          cName = item.name;
-          cStock = item.cSock;
-          cId = item.id;
 
           xName.value = item.name;
           xStock.value = item.cStock;
@@ -103,9 +107,9 @@ document.addEventListener("DOMContentLoaded", function () {
                   "danger"
                 );
               });
-          });
+          });*/
         });
-
+        ///////////////
         // Create divs for the properties you want to display
         const nameDiv = document.createElement("div");
         nameDiv.classList.add("name");
@@ -147,4 +151,98 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Call the function to fetch item data
   fetchItemData();
+
+  const receive_product = this.getElementById("receive_product");
+  receive_product.addEventListener("click", () => {
+    if (!isSelected) {
+      popWindow_receive.style.display = "flex";
+      const myName = document.getElementById("mName");
+      const mStock = document.getElementById("mStock");
+      myName.value = cName;
+      mStock.value = 0;
+      //myName.textContent = "cName";
+
+      const reject_btn = document.getElementById("reject_btn");
+      reject_btn.addEventListener("click", () => {
+        popWindow_receive.style.display = "none";
+        cId = null;
+        cName = "";
+        cStock = null;
+        isSelected = false;
+        document.querySelectorAll(".item").forEach((el) => {
+          el.classList.remove("activated");
+        });
+
+        const stock_data = {
+          item: nameValue,
+          stock: stockValue,
+        };
+
+        // Make a POST request to your API
+        fetch("https://inventorymanaging.000webhostapp.com/add_stock.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(stock_data),
+        })
+          .then((response) => response.json())
+          .then((responseData) => {
+            // Handle the response from the server
+            console.log(responseData);
+            appendAlert("Item Added!", "success");
+            popWindow.style.display = "none";
+            fetchItemData();
+          })
+          .catch((error) => {
+            // Handle errors
+            console.error("Error:", error);
+            appendAlert(
+              "Faile to add item to database!. Check the network.",
+              "danger"
+            );
+          });
+      });
+
+      const receive_stock = document.getElementById("receive_stock");
+      receive_stock.addEventListener("click", () => {
+        let tStock = mStock.value + cStock;
+        console.log(tStock);
+      });
+    } else {
+      appendAlert("First, Select an Item", "info");
+    }
+  });
+});
+
+const close_receive = document.getElementById("clbtn_receive");
+const popWindow_receive = document.getElementById("popWindow_receive_stock");
+const popUpContainer_receive = document.getElementById(
+  "popUpContainer_receive"
+);
+
+// Flag to track whether the click happened inside or outside the popUpContainer
+let insideContainer_for_receive = false;
+
+popUpContainer_receive.addEventListener("click", () => {
+  insideContainer_for_receive = true;
+  // You can add additional logic if needed
+});
+
+close_receive.addEventListener("click", () => {
+  // Check the flag to determine the click location
+  if (insideContainer_for_receive) {
+    insideContainer_for_receive = false; // Reset the flag
+  } else {
+    popWindow_receive.style.display = "none";
+  }
+});
+
+popWindow_receive.addEventListener("click", () => {
+  // Check the flag to determine the click location
+  if (insideContainer_for_receive) {
+    insideContainer_for_receive = false; // Reset the flag
+  } else {
+    popWindow_receive.style.display = "none";
+  }
 });

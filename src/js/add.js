@@ -28,6 +28,7 @@ add_item.addEventListener("click", () => {
       console.log(responseData);
       appendAlert("Item Added!", "success");
       popWindow.style.display = "none";
+      fetchItemData();
     })
     .catch((error) => {
       // Handle errors
