@@ -157,7 +157,7 @@ reject_btn.addEventListener("click", () => {
     .then((responseData) => {
       // Handle the response from the server
       console.log(responseData);
-      appendAlert("Item Added!", "success");
+      appendAlert("Stock Added!", "success");
       popWindow.style.display = "none";
       fetchItemData();
 
@@ -175,6 +175,82 @@ reject_btn.addEventListener("click", () => {
       console.error("Error:", error);
       appendAlert(
         "Faile to add item to database!. Check the network.",
+        "danger"
+      );
+    });
+});
+
+issuing_product = document.getElementById("issuing_product");
+issuing_product.addEventListener("click", () => {
+  if (isSelected) {
+    let popWindow_issuing = document.getElementById("popWindow_issuing_stock");
+    popWindow_issuing.style.display = "flex";
+
+    let issuingName = document.getElementById("iName");
+    let iStock = document.getElementById("iStock");
+    let selectElement = document.getElementById("issuingSelect");
+
+    issuingName.value = cName;
+    iStock.value = 0;
+    let cancel_stocks = document.getElementById("cancel_stocks");
+    cancel_stocks.addEventListener("click", () => {
+      popWindow_issuing.style.display = "none";
+      cId = null;
+      cName = "";
+      cStock = null;
+      isSelected = false;
+      document.querySelectorAll(".item").forEach((el) => {
+        el.classList.remove("activated");
+      });
+    });
+  } else {
+    appendAlert("First, Select an Item", "info");
+  }
+});
+
+let issuing_stock = document.getElementById("issuing_stock");
+issuing_stock.addEventListener("click", () => {
+  let iStock = document.getElementById("iStock");
+  let selectElement_val = document.getElementById("issuingSelect");
+  const popWindow_issuing = document.getElementById("popWindow_issuing_stock");
+
+  const stock_val = {
+    id: cId,
+    stock: iStock.value,
+    previous: cStock,
+    from: selectElement_val.value,
+  };
+
+  // Make a POST request to your API
+  fetch("https://inventorymanaging.000webhostapp.com/issuing_stock.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(stock_val),
+  })
+    .then((response) => response.json())
+    .then((responseData) => {
+      // Handle the response from the server
+      console.log(responseData);
+      appendAlert("Stock issued!", "success");
+      popWindow_issuing.style.display = "none";
+      fetchItemData();
+
+      popWindow_issuing.style.display = "none";
+      cId = null;
+      cName = "";
+      cStock = null;
+      isSelected = false;
+      document.querySelectorAll(".item").forEach((el) => {
+        el.classList.remove("activated");
+      });
+    })
+    .catch((error) => {
+      // Handle errors
+      console.error("Error:", error);
+      appendAlert(
+        "Faile to update the database!. Check the network.",
         "danger"
       );
     });

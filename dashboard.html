@@ -189,7 +189,7 @@
       </div>
     </div>
 
-    <div id="popWindow_issuing_stock" style="display: flex" class="popup">
+    <div id="popWindow_issuing_stock" class="popup">
       <div
         id="popUpContainer_issuing"
         class="popContainer container-fluid bg-white"
@@ -198,13 +198,13 @@
         <div><h5 class="pb-3">Issuing Stock</h5></div>
         <div class="list_product_input">
           <div>
-            <label class="p-3" for="name">Product Name : </label>
+            <label class="p-3" for="iName">Product Name : </label>
             <input
               class="Input"
               disabled
               type="text"
-              id="mName"
-              name="mName"
+              id="iName"
+              name="iName"
               value=""
               style="border: 0; background-color: white"
             />
@@ -212,21 +212,23 @@
 
           <div>
             <label class="p-3" for="stock">Stock : </label>
-            <input type="number" id="mStock" name="stock" value="0" />
+            <input type="number" id="iStock" name="stock" value="0" />
           </div>
           <div>
-            <label class="p-3" for="stock">To :</label>
+            <label class="p-3" for="stock_to">To :</label>
             <select id="issuingSelect">
               <option value="K">Kitchen</option>
-              <option value="S-1">Shop-1</option>
+              <option value="S-1">Shop</option>
               <option value="W">Wastage</option>
               <option value="M">Market</option>
+              <option value="D">Donation</option>
+              <option value="O">Others</option>
             </select>
           </div>
         </div>
         <div style="width: 100%; display: flex; justify-content: end">
-          <div id="cancel_btn" class="btn-item">
-            <button id="">Cancel</button>
+          <div id="cancel_stocks" class="btn-item">
+            <button>Cancel</button>
           </div>
           <div id="issuing_stock" class="btn-item">
             <button id="">Issuing Stock</button>

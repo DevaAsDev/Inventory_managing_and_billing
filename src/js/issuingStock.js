@@ -1,5 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {});
-
 const close_issuing = document.getElementById("clbtn_issuing");
 const popWindow_issuing = document.getElementById("popWindow_issuing_stock");
 const popUpContainer_issuing = document.getElementById(
@@ -16,7 +14,6 @@ popUpContainer_issuing.addEventListener("click", () => {
 
 close_issuing.addEventListener("click", () => {
   // Check the flag to determine the click location
-  console.log("clicke listner");
   if (insideContainer_for_issuing) {
     insideContainer_for_issuing = false; // Reset the flag
   } else {
