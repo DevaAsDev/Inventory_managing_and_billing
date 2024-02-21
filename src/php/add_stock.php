@@ -1,4 +1,5 @@
 <?php
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
@@ -20,28 +21,39 @@ if (!$conn) {
         $previous = isset($data['previous']) ? mysqli_real_escape_string($conn, $data['previous']) : null;
         $c_stock = isset($data['stock']) ? mysqli_real_escape_string($conn, $data['stock']) : null;
         $id = isset($data['id']) ? mysqli_real_escape_string($conn, $data['id']) : null;
+        $from = isset($data['from']) ? mysqli_real_escape_string($conn, $data['from']) : null;
 
         // Check if all required fields are present
-        if ($previous !== null && $stock !== null && $id !== null) {
+        if ($previous !== null && $c_stock !== null && $id !== null) {
             // Prepare and bind the statement for updating
-            $query = "UPDATE stock SET foreign_id = ?, c_stock = ? WHERE id = ?";
+            $query = "UPDATE stock SET c_stock = ? WHERE foreign_id = ?";
             $stmt = mysqli_prepare($conn, $query);
 
-            $t_stock = $previous + $c_stock;
+            $t_stock = (int) $previous + (int) $c_stock;
             // Bind parameters
-            mysqli_stmt_bind_param($stmt, "sii", $item, $stock, $id);
+            mysqli_stmt_bind_param($stmt, "ii", $t_stock, $id);
 
             // Execute the statement
             $result = mysqli_stmt_execute($stmt);
 
             if ($result) {
-                $response = ['message' => 'Item updated successfully'];
-            } else {
-                $response = ['error' => 'Error updating item in the database'];
-            }
+                $direc = 'IN';
+                $query = "INSERT INTO stock_history(foreign_id, stock_quantity, direction, date, time, source) VALUES (?, ?, ?,CURDATE(), NOW(), ?)";
+                $stmt = mysqli_prepare($conn, $query);
+                mysqli_stmt_bind_param($stmt, "iiss", $id, $c_stock, $direc, $from);
 
-            // Close the statement
-            mysqli_stmt_close($stmt);
+                $result = mysqli_stmt_execute($stmt);
+                if ($result) {
+                    $response = ['message' => 'Stock updated successfully'];
+                } else {
+                    $response = ['error' => 'Error updating stock to the database'];
+                }
+
+                // Close the statement
+                mysqli_stmt_close($stmt);
+            } else {
+                $response = ['error' => 'Error updating stock in the database'];
+            }
 
         } else {
             $response = ['error' => 'Invalid or incomplete data received'];
@@ -52,4 +64,5 @@ if (!$conn) {
     }
 
 }
+echo json_encode(['data' => $response], JSON_UNESCAPED_UNICODE);
 ?>
