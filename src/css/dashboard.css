@@ -3,6 +3,7 @@ body {
   box-sizing: border-box;
   margin: 0;
   overflow: hidden;
+  font-size: clamp(1rem, 0.34783vw, 3rem);
 }
 
 /* For WebKit browsers (Chrome, Safari) */
@@ -44,11 +45,13 @@ body {
 }
 
 .aside {
-  height: 80vh;
+  /*height: 80vh;*/
+  overflow: auto;
 }
 
 .btn-add {
-  height: 100px;
+  /*height: 100px;*/
+  margin: 10px;
   place-items: bottom;
   display: grid;
   place-items: center;
@@ -113,7 +116,6 @@ body {
   border-radius: 12px;
   border: none;
   padding-left: 20px;
-  min-height: 10vh;
 }
 
 .search > input:hover {
@@ -121,7 +123,7 @@ body {
 }
 
 .productContainer {
-  height: 60vh;
+  min-height: 60vh;
   border: 1px solid black;
   border-radius: 13px;
   overflow: auto;
@@ -177,8 +179,9 @@ body {
   }
   .mainContainer {
     padding-left: 30px;
-    margin-left: 30px;
+    /*margin-left: 30px;*/
     overflow: auto;
+    width: 100%;
   }
 
   .mainContainer > h2 {

@@ -71,10 +71,7 @@
           />
         </div>
         <hr />
-        <div
-          id="itemList"
-          class="productContainer container-fluid mt-5 p-2"
-        ></div>
+        <div id="itemList" class="productContainer container-fluid p-2"></div>
       </div>
       <!--div for stock -->
       <div
@@ -166,8 +163,19 @@
           </div>
 
           <div>
-            <label class="p-3" for="stock">Opening Stock : </label>
+            <label class="p-3" for="stock">Stock : </label>
             <input type="number" id="mStock" name="stock" value="0" />
+          </div>
+          <div>
+            <label class="p-3" for="stock">From :</label>
+            <select id="sourceSelect">
+              <option value="FN">Farmers - Natural Growing</option>
+              <option value="FO">Farmers - Organic</option>
+              <option value="MO">Melvins - Organic</option>
+              <option value="JOF">JOF - Organic</option>
+              <option value="FNO">Farmers - Non Organic</option>
+              <option value="M">Market</option>
+            </select>
           </div>
         </div>
         <div style="width: 100%; display: flex; justify-content: end">
@@ -176,6 +184,52 @@
           </div>
           <div id="receive_stock" class="btn-item">
             <button id="">Receive Stock</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="popWindow_issuing_stock" style="display: flex" class="popup">
+      <div
+        id="popUpContainer_issuing"
+        class="popContainer container-fluid bg-white"
+      >
+        <div id="clbtn_issuing" class="cls_btn">X</div>
+        <div><h5 class="pb-3">Issuing Stock</h5></div>
+        <div class="list_product_input">
+          <div>
+            <label class="p-3" for="name">Product Name : </label>
+            <input
+              class="Input"
+              disabled
+              type="text"
+              id="mName"
+              name="mName"
+              value=""
+              style="border: 0; background-color: white"
+            />
+          </div>
+
+          <div>
+            <label class="p-3" for="stock">Stock : </label>
+            <input type="number" id="mStock" name="stock" value="0" />
+          </div>
+          <div>
+            <label class="p-3" for="stock">To :</label>
+            <select id="issuingSelect">
+              <option value="K">Kitchen</option>
+              <option value="S-1">Shop-1</option>
+              <option value="W">Wastage</option>
+              <option value="M">Market</option>
+            </select>
+          </div>
+        </div>
+        <div style="width: 100%; display: flex; justify-content: end">
+          <div id="cancel_btn" class="btn-item">
+            <button id="">Cancel</button>
+          </div>
+          <div id="issuing_stock" class="btn-item">
+            <button id="">Issuing Stock</button>
           </div>
         </div>
       </div>
@@ -200,6 +254,8 @@
     <script src="src/js/listLoader.js"></script>
 
     <script src="src/js/windowControler.js"></script>
+
+    <script type="module" src="src/js/issuingStock.js"></script>
 
     <script>
       const close_edit = document.getElementById("clbtn_edit");
