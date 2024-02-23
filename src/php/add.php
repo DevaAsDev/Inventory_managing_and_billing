@@ -52,7 +52,23 @@ if (!$conn) {
                 // Execute the statement
                 $result = mysqli_stmt_execute($stmt);
                 if ($result) {
-                    $response = ['message' => 'New item added successfully'];
+
+                    // Prepare and bind the statement for insertion
+                    $query = "INSERT INTO shopItems (name,foreign_id, itemCode, cStock, sku) VALUES (?, ?, ?, ?, ?)";
+                    $stmt = mysqli_prepare($conn, $query);
+
+                    // Bind parameters
+                    mysqli_stmt_bind_param($stmt, "sisis", $item, $lats_id, $code, $stock, $generatedID);
+
+                    // Execute the statement
+                    $result = mysqli_stmt_execute($stmt);
+
+                    if ($result) {
+                        $response = ['message' => 'New item added successfully'];
+                    } else {
+                        $response = ['error' => 'Error adding new item to the database'];
+                    }
+
                 } else {
                     $response = ['error' => 'Error adding new item to the database'];
                 }

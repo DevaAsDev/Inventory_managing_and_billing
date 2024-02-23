@@ -19,7 +19,7 @@ if (!$conn) {
     $response = ['error' => 'Unable to connect to the database'];
 } else {
     // Fetch data from the items table
-    $itemsQuery = "SELECT id, name ,itemCode, sku FROM items";
+    $itemsQuery = "SELECT id, name ,itemCode, sku FROM items ORDER BY name";
     $itemsResult = mysqli_query($conn, $itemsQuery);
     $itemsData = mysqli_fetch_all($itemsResult, MYSQLI_ASSOC);
 

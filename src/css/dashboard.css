@@ -191,7 +191,8 @@ body {
 
 @media only screen and (max-width: 560px) {
   .productContainer {
-    width: 70%;
+    width: 95%;
+    margin: auto;
     overflow: auto;
     max-height: 60%;
     min-height: 300px;
@@ -212,7 +213,7 @@ body {
   }*/
 }
 
-@media only screen and (max-width: 30px) {
+@media only screen and (max-width: 300px) {
   .productContainer {
     width: 100%;
     overflow: auto;
