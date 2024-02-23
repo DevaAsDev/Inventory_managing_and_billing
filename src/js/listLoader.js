@@ -123,7 +123,6 @@ function fetchItemData() {
     headers: {
       "Content-Type": "application/json",
     },
-    httpVersion: "1.1", // Set HTTP version to 1.1
   })
     .then((response) => response.json())
     .then((data) => {
