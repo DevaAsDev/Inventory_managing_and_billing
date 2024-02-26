@@ -26,6 +26,8 @@ if (!$conn) {
         $code = 1000 + fetchLatestIDFromDatabase($conn) + 1;
         $stock = isset($data['stock']) ? mysqli_real_escape_string($conn, $data['stock']) : null;
 
+        $unit = 'kg';
+
         // Check if all required fields are present
         if ($item !== null && $code !== null && $stock !== null) {
 
@@ -33,11 +35,11 @@ if (!$conn) {
             $generatedID = generateUniqueID($conn);
 
             // Prepare and bind the statement for insertion
-            $query = "INSERT INTO items (name, itemCode, cStock, sku) VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO items (name, itemCode, cStock, sku, unit) VALUES (?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($conn, $query);
 
             // Bind parameters
-            mysqli_stmt_bind_param($stmt, "ssis", $item, $code, $stock, $generatedID);
+            mysqli_stmt_bind_param($stmt, "ssiss", $item, $code, $stock, $generatedID, $unit);
 
             // Execute the statement
             $result = mysqli_stmt_execute($stmt);
@@ -54,11 +56,11 @@ if (!$conn) {
                 if ($result) {
 
                     // Prepare and bind the statement for insertion
-                    $query = "INSERT INTO shopItems (name,foreign_id, itemCode, cStock, sku) VALUES (?, ?, ?, ?, ?)";
+                    $query = "INSERT INTO shopItems (name,foreign_id, itemCode, cStock, sku, unit) VALUES (?, ?, ?, ?, ?, ?)";
                     $stmt = mysqli_prepare($conn, $query);
 
                     // Bind parameters
-                    mysqli_stmt_bind_param($stmt, "sisis", $item, $lats_id, $code, $stock, $generatedID);
+                    mysqli_stmt_bind_param($stmt, "sisiss", $item, $lats_id, $code, $stock, $generatedID, $unit);
 
                     // Execute the statement
                     $result = mysqli_stmt_execute($stmt);

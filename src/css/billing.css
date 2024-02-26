@@ -6,6 +6,56 @@ html,
   box-sizing: border-box;
 }
 
+body {
+  --sb-track-color: #232e33;
+  --sb-thumb-color: #6baf8d;
+  --sb-size: 1px;
+}
+
+/* For WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 1px; /* Adjust the width as needed */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 1px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #6baf8d;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #6baf8d #fffdfd;
+}
+
+/* For Microsoft Edge */
+* {
+  -ms-overflow-style: none;
+}
+
+*::-ms-scrollbar {
+  width: 1px; /* Adjust the width as needed */
+}
+
+*::-ms-scrollbar-thumb {
+  background-color: #6baf8d;
+  border-radius: 1px;
+}
+
+*::-ms-scrollbar-track {
+  background-color: #6baf8d;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
+}
+
 .containers {
   display: flex;
   flex-direction: row;
@@ -18,7 +68,6 @@ html,
   background-color: rgb(37, 36, 36);
   display: flex;
   flex-direction: column;
-  /*align-items: center;*/
   padding: 20px 0 0 0;
   transition: 1s;
 }
@@ -67,25 +116,6 @@ ul {
   /* You can add more styles for disabled items */
 }
 
-.contentArea {
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
-  padding: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  margin: 10px 5px 5px 5px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.mainContent {
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
-  padding: 20px;
-  margin: 5px;
-  border-radius: 10px;
-  overflow: auto;
-}
-
 .noData {
   display: flex;
   width: 100%;
@@ -94,11 +124,45 @@ ul {
   align-items: center;
 }
 
+.box2 {
+  background-color: #e2dede;
+  max-height: 100vh;
+  overflow: auto;
+}
+
 .items_container {
-  margin: 10px;
-  width: calc(100% - 20px);
-  height: calc(100% - 20px);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+  background-color: white;
+  margin: 20px;
+  width: calc(100% - 40px);
+  overflow: auto;
+  min-height: calc(100% - 40px);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.item {
+  padding: 5px 20px;
+  cursor: pointer;
+  font-size: 90%;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.item:nth-child(even) {
+  background-color: rgb(170, 175, 175);
+  color: white;
+}
+
+.item:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.flex_grow {
+  flex: 1 0 20px;
+  text-align: center;
+}
+
+.activated {
+  background-color: rgb(51, 51, 85);
+  color: white;
 }
 
 @media only screen and (max-width: 672px) {
@@ -106,24 +170,12 @@ ul {
     flex-direction: column;
   }
 
-  .mylist {
-    display: none;
-  }
-
-  .user {
-    height: 500px;
-  }
-
   .box1 {
     width: 100vw;
-    transition: 0s;
+    transition: 0.2s;
   }
 
   .box2 {
     width: 100vw;
-  }
-
-  .mainContent > .listView {
-    flex-direction: column;
   }
 }

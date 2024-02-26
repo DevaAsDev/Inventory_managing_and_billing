@@ -1,0 +1,64 @@
+
+CREATE TABLE items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    itemCode VARCHAR(255) NOT NULL,
+    cStock INT NOT NULL,
+    sku VARCHAR(255) NOT NULL,
+    unit VARCHAR(255)
+);
+
+
+CREATE TABLE stock (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    foreign_id INT NOT NULL,
+    c_stock INT NOT NULL,
+    FOREIGN KEY (foreign_id) REFERENCES items(id)
+);
+
+CREATE TABLE stock_history (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    foreign_id INT NOT NULL,
+    stock_quantity INT NOT NULL,
+    direction VARCHAR(255) NOT NULL,
+    date DATE,
+    time TIME,
+    source VARCHAR(255),
+    FOREIGN KEY (foreign_id) REFERENCES items(id)
+);
+
+
+CREATE TABLE shopItems (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    foreign_id INT NOT NULL,
+    itemCode VARCHAR(255) NOT NULL,
+    cStock INT NOT NULL,
+    sku VARCHAR(255) NOT NULL,
+    FOREIGN KEY (foreign_id) REFERENCES items(id),
+    unit VARCHAR(255)
+);
+
+CREATE TABLE shop_history (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    foreign_id INT NOT NULL,
+    stock_quantity INT NOT NULL,
+    direction VARCHAR(255) NOT NULL,
+    date DATE,
+    time TIME,
+    source VARCHAR(255),
+    FOREIGN KEY (foreign_id) REFERENCES items(id)
+);
+
+
+CREATE TABLE party (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    number VARCHAR(255) NOT NULL,
+    place VARCHAR(255) NOT NULL,
+    fname VARCHAR(255) NOT NULL,
+    account VARCHAR(255) NOT NULL,
+    ifsi VARCHAR(255) NOT NULL,
+    branch VARCHAR(255) NOT NULL,
+    holder VARCHAR(255) NOT NULL
+);
