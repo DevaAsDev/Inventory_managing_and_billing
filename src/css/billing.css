@@ -147,8 +147,8 @@ ul {
 }
 
 .item:nth-child(even) {
-  background-color: rgb(170, 175, 175);
-  color: white;
+  background-color: rgb(220, 231, 231);
+  color: rgb(0, 0, 0);
 }
 
 .item:hover {

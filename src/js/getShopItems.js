@@ -123,6 +123,7 @@ function showPopUp(item) {
   let popWindow = document.getElementById("popWindow");
   popWindow.style.display = "grid";
   let popUpContainer = document.getElementById("popUpContainer");
+  popUpContainer.classList.add("popUpContainer");
 
   popUpContainer.innerHTML = `
   <div id="clbtn" class="cls_btn">X</div>
@@ -157,7 +158,7 @@ function showPopUp(item) {
               <label for="nStock">New Stock*</label>
             </div>
             <div class="col-75">
-              <input type="text" id="nStock" name="nStock" placeholder="Stock" />
+              <input type="text" id="nStock" name="nStock" value="0" />
             </div>
           </div>
 
@@ -175,6 +176,38 @@ function showPopUp(item) {
             </div>
           </div>
 
+          <div class="row pt-3 ">
+          <div class="col-6">
+            <div class="row">
+              <div class="col-6">
+                <label for="mrp">MRP</label>
+              </div>
+              <div class="col-6">
+                <input
+                  type="text"
+                  id="mrp"
+                  name="mrp"
+                  value="0"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="row">
+              <div class="col-6">
+                <label for="sprice">Sales Price</label>
+              </div>
+              <div class="col-6">
+                <input
+                  type="text"
+                  id="sprice"
+                  name="sprice"
+                  value="0"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
           <div class="row pt-5">
             <input id="submit_stock" type="submit" value="Add" />
@@ -184,7 +217,48 @@ function showPopUp(item) {
 
   let submit_stock = document.getElementById("submit_stock");
   submit_stock.addEventListener("click", () => {
-    window.alert("dfjifk");
+    let nStock = document.getElementById("nStock").value;
+    let mrp = document.getElementById("mrp").value;
+    let sPrice = document.getElementById("sprice").value;
+    let source = document.getElementById("from").value;
+
+    let sum = parseInt(item.cStock) + parseInt(nStock);
+
+    // Prepare the data to be sent
+    const data = {
+      id: item.id,
+      stock: sum,
+      mrp: mrp,
+      price: sPrice,
+      time: getCurrentTime(),
+      date: getCurrentDate(),
+      foreign_id: item.foreign_id,
+      source: source,
+    };
+
+    // Make a POST request to your API
+    fetch("https://inventorymanaging.000webhostapp.com/add.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        // Handle the response from the server
+        console.log(responseData);
+        // appendAlert("Item Added!", "success");
+        popWindow.style.display = "none";
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error("Error:", error);
+        // appendAlert(
+        //   "Faile to add item to database!. Check the network.",
+        //   "danger"
+        // );
+      });
   });
 
   let close_btn = document.getElementById("clbtn");
@@ -214,6 +288,25 @@ function showPopUp(item) {
       popWindow.style.display = "none";
     }
   });
+}
+
+function getCurrentDate() {
+  const now = new Date();
+  const dd = String(now.getDate()).padStart(2, "0");
+  const mm = String(now.getMonth() + 1).padStart(2, "0"); // Month is zero-based
+  const yy = String(now.getFullYear()).slice(-2);
+
+  return dd + mm + yy;
+}
+
+function getCurrentTime() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const seconds = String(now.getSeconds()).padStart(2, "0");
+
+  // Use only the last 4 digits of the time for variety
+  return hours + minutes + seconds;
 }
 
 console.log("before fetching data");

@@ -27,6 +27,7 @@ if (!$conn) {
         $stock = isset($data['stock']) ? mysqli_real_escape_string($conn, $data['stock']) : null;
 
         $unit = 'kg';
+        $temp = 0;
 
         // Check if all required fields are present
         if ($item !== null && $code !== null && $stock !== null) {
@@ -56,11 +57,11 @@ if (!$conn) {
                 if ($result) {
 
                     // Prepare and bind the statement for insertion
-                    $query = "INSERT INTO shopItems (name,foreign_id, itemCode, cStock, sku, unit) VALUES (?, ?, ?, ?, ?, ?)";
+                    $query = "INSERT INTO shopItems (name,foreign_id, itemCode, cStock, sku, unit) VALUES (?, ?, ?, ?, ?, ?,? ,?)";
                     $stmt = mysqli_prepare($conn, $query);
 
                     // Bind parameters
-                    mysqli_stmt_bind_param($stmt, "sisiss", $item, $lats_id, $code, $stock, $generatedID, $unit);
+                    mysqli_stmt_bind_param($stmt, "sisissii", $item, $lats_id, $code, $stock, $generatedID, $unit, $temp, $temp);
 
                     // Execute the statement
                     $result = mysqli_stmt_execute($stmt);
