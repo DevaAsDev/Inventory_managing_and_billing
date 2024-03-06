@@ -106,7 +106,7 @@ addParty.addEventListener("click", () => {
           type="text"
           id="hName"
           name="hName"
-          placeholder="Account Holder Name"
+          placeholder="Account Holder"
         />
       </div>
     </div>
@@ -167,6 +167,7 @@ addParty.addEventListener("click", () => {
       ifsi: ifsi,
       branch: bName,
       holder: hName,
+      date: getCurrentDate(),
     };
 
     fetch("https://inventorymanaging.000webhostapp.com/add_party.php", {
@@ -192,3 +193,12 @@ addParty.addEventListener("click", () => {
       });
   });
 });
+
+function getCurrentDate() {
+  const now = new Date();
+  const dd = String(now.getDate()).padStart(2, "0");
+  const mm = String(now.getMonth() + 1).padStart(2, "0"); // Month is zero-based
+  const yy = String(now.getFullYear()).slice(-2);
+
+  return dd + mm + yy;
+}

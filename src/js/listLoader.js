@@ -63,7 +63,7 @@ function displayItemList(response, stock_data) {
       "flex-row",
       "justify-content-between",
       "align-content-center",
-      "p-1",
+      "p-3",
       "bg-body-primary"
     );
 

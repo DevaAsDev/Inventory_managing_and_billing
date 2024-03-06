@@ -26,39 +26,24 @@ if (!$conn) {
         $ifsi = isset($data['ifsi']) ? mysqli_real_escape_string($conn, $data['ifsi']) : null;
         $branch = isset($data['branch']) ? mysqli_real_escape_string($conn, $data['branch']) : null;
         $holder = isset($data['holder']) ? mysqli_real_escape_string($conn, $data['holder']) : null;
+        $date = isset($data['date']) ? mysqli_real_escape_string($conn, $data['date']) : null;
 
 
         // Check if all required fields are present
         if ($name !== null && $mNumber !== null) {
             // Prepare and bind the statement for updating
-            $query = "UPDATE stock SET c_stock = ? WHERE foreign_id = ?";
+            $query = "INSERT INTO party (name, number, place, fname, account, ifsi, branch, holder, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($conn, $query);
-
-            $t_stock = (int) $previous + (int) $c_stock;
             // Bind parameters
-            mysqli_stmt_bind_param($stmt, "ii", $t_stock, $id);
-
+            mysqli_stmt_bind_param($stmt, "sississss", $Name, $mNumber, $place, $fName, $accont, $ifsi, $branch, $holder, $date);
             // Execute the statement
             $result = mysqli_stmt_execute($stmt);
-
             if ($result) {
-                $direc = 'IN';
-                $query = "INSERT INTO stock_history(foreign_id, stock_quantity, direction, date, time, source) VALUES (?, ?, ?,CURDATE(), NOW(), ?)";
-                $stmt = mysqli_prepare($conn, $query);
-                mysqli_stmt_bind_param($stmt, "iiss", $id, $c_stock, $direc, $from);
-
-                $result = mysqli_stmt_execute($stmt);
-                if ($result) {
-                    $response = ['message' => 'Stock updated successfully'];
-                } else {
-                    $response = ['error' => 'Error updating stock to the database'];
-                }
-
-                // Close the statement
-                mysqli_stmt_close($stmt);
+                $response = ['data' => 'Party added successfully'];
             } else {
-                $response = ['error' => 'Error updating stock in the database'];
+                $response = ['error' => 'Invalid operation'];
             }
+            mysqli_stmt_close($stmt);
 
         } else {
             $response = ['error' => 'Invalid or incomplete data received'];

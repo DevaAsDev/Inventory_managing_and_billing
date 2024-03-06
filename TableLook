@@ -36,7 +36,9 @@ CREATE TABLE shopItems (
     cStock INT NOT NULL,
     sku VARCHAR(255) NOT NULL,
     FOREIGN KEY (foreign_id) REFERENCES items(id),
-    unit VARCHAR(255)
+    unit VARCHAR(255),
+    mrp INT NOT NULL,
+    sprice INT NOT NULL
 );
 
 CREATE TABLE shop_history (
@@ -62,3 +64,13 @@ CREATE TABLE party (
     branch VARCHAR(255) NOT NULL,
     holder VARCHAR(255) NOT NULL
 );
+
+
+
+
+ALTER TABLE shopItems
+MODIFY COLUMN unit VARCHAR(255) DEFAULT 'kg';
+
+ALTER TABLE shopItems 
+ADD COLUMN mrp INT NOT NULL,
+ADD COLUMN sprice INT NOT NULL

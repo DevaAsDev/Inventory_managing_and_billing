@@ -237,7 +237,7 @@ function showPopUp(item) {
     };
 
     // Make a POST request to your API
-    fetch("https://inventorymanaging.000webhostapp.com/add.php", {
+    fetch("https://inventorymanaging.000webhostapp.com/shop_stock.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

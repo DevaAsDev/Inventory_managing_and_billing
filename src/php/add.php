@@ -57,7 +57,7 @@ if (!$conn) {
                 if ($result) {
 
                     // Prepare and bind the statement for insertion
-                    $query = "INSERT INTO shopItems (name,foreign_id, itemCode, cStock, sku, unit) VALUES (?, ?, ?, ?, ?, ?,? ,?)";
+                    $query = "INSERT INTO shopItems (name,foreign_id, itemCode, cStock, sku, unit, mrp, sprice) VALUES (?, ?, ?, ?, ?, ?,? ,?)";
                     $stmt = mysqli_prepare($conn, $query);
 
                     // Bind parameters

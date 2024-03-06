@@ -40,7 +40,7 @@ if (!$conn) {
             $result = mysqli_stmt_execute($stmt);
             if ($result) {
                 $direc = 'IN';
-                $query = "INSERT INTO sHOP_history(foreign_id, stock_quantity, direction, date, time, source) VALUES (?, ?, ?,? , ?, ?)";
+                $query = "INSERT INTO shop_history(foreign_id, stock_quantity, direction, date, time, source) VALUES (?, ?, ?,? , ?, ?)";
                 $stmt = mysqli_prepare($conn, $query);
                 mysqli_stmt_bind_param($stmt, "iiss", $foreign_id, $c_stock, $direc, $data, $time, $source);
 
