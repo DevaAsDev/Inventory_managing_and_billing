@@ -49,7 +49,7 @@
   padding: 0 10px;
 }
 
-.sub-container > input[type="search"] {
+#search {
   width: 80%;
   min-height: 50px;
   border-radius: 8px;

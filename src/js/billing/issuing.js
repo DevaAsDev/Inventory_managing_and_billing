@@ -88,7 +88,7 @@ function show_popup(items) {
   let name = document.getElementById("name");
   let cStock = document.getElementById("cStock");
   let issuing_stock = document.getElementById("issuing_stock");
-  let nStock = document.getElementById(nStock).value;
+  let nStock = document.getElementById(nStock);
   let to = document.getElementById("to");
 
   items.data.forEach((item) => {
@@ -114,7 +114,7 @@ function show_popup(items) {
     const issuing_data = {
       id: get_id,
       previous: current_stock,
-      stock: nStock,
+      stock: nStock.value,
       fid: f_id,
       source: to.value,
       date: getCurrentDate(),
