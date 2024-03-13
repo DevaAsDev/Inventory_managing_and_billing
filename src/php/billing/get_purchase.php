@@ -15,7 +15,7 @@ if (!$conn) {
     $response = ['error' => 'Unable to connect to the database'];
 } else {
 
-    $query = "SELECT * FROM shopItems";
+    $query = "SELECT * FROM purchase";
     $result = mysqli_query($conn, $query);
 
     if ($result) {

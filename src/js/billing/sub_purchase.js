@@ -1,9 +1,14 @@
+//global constant and var
 let itemListArr = [];
 const existingCodes = []; // Keep track of generated codes
 let selectedItemId = 0;
 
+let mobileNumber = 0;
+let party_name = "";
+let party_id = 0;
+
 let re =
-  '[{"item_id":"1","name":"auther1","number":"925854625"},{"item_id":"2","name":"auther2","number":"925857854"}]';
+  '[{"item_id":"1","name":"auther1","number":"925854625","p_id":"365128125"},{"item_id":"2","name":"auther2","number":"925857854","p_id":"365128125"}]';
 
 response = JSON.parse(re);
 
@@ -37,6 +42,9 @@ function show_purchase_winsow(partyData, items) {
   party.addEventListener("change", function (event) {
     let ob = partyData.find((item) => item.item_id === event.target.value);
     mobileNum.value = ob.number;
+    mobileNumber = ob.number;
+    party_name = ob.name;
+    party_id = ob.p_id;
   });
 
   let primeFlag = true;
@@ -78,7 +86,6 @@ function show_purchase_winsow(partyData, items) {
     let itemCount = 0;
     itemListArr.forEach((item, index) => {
       itemCount += 1;
-      let idFor = "quantity" + item.id;
       let ids = item.id;
 
       const newRowDiv = document.createElement("div");
@@ -117,41 +124,21 @@ function show_purchase_winsow(partyData, items) {
   function findObjectById(id) {
     return response.find((item) => item.item_id === id);
   }
-
-  // let close_btn = document.getElementById("close_x");
-  // // Flag to track whether the click happened inside or outside the popUpContainer
-  // let insideContainer = false;
-
-  // popUpContainer.addEventListener("click", () => {
-  //   insideContainer = true;
-  // });
-
-  // close_btn.addEventListener("click", () => {
-  //   // Check the flag to determine the click location
-  //   if (insideContainer) {
-  //     insideContainer = false; // Reset the flag
-  //   } else {
-  //     popWindow.style.display = "none";
-  //   }
-  // });
-
-  // popWindow.addEventListener("click", () => {
-  //   // Check the flag to determine the click location
-  //   if (insideContainer) {
-  //     insideContainer = false; // Reset the flag
-  //   } else {
-  //     popWindow.style.display = "none";
-  //   }
-  // });
 }
 
 //function to calculate discount
 function getDiscount() {
   let discount = document.getElementById("discount");
   discount.addEventListener("change", (event) => {
-    let val = event.target.value;
+    let val = parseFloat(event.target.value);
     let pAmount = document.getElementById("pAmount");
-    pAmount.value = parseInt(addTotal()) - parseInt(val);
+    // Validate discount value (optional)
+    if (isNaN(val) || val < 0) {
+      alert("Please enter a valid discount value (positive number).");
+      return; // Exit the function if discount is invalid
+    } else {
+      pAmount.value = parseInt(addTotal()) - parseInt(val);
+    }
   });
   let pAmount = document.getElementById("pAmount");
   pAmount.value = parseInt(addTotal()) - parseInt(discount.value);
@@ -360,4 +347,58 @@ remove.addEventListener("click", () => {
       getDiscount();
     });
   }
+});
+
+let save_purchase = document.getElementById("save_purchase");
+let cancel_purchase = document.getElementById("cancel_purchase");
+
+save_purchase.addEventListener("click", () => {
+  let bNumber = document.getElementById("bNumber");
+
+  let pAmount = document.getElementById("pAmount");
+  let discount = document.getElementById("discount");
+  let paid = document.getElementById("paid");
+
+  let pType = document.getElementById("pType");
+  let remarks = document.getElementById("remarks");
+  let totalAmout = addTotal();
+
+  const purchase_data = {
+    bId: bNumber.value,
+    pId: party_id,
+    pNmae: party_name,
+    pNumber: mobileNumber,
+    pAmount: pAmount.value,
+    discount: discount.value,
+    paid: paid.value,
+    pType: pType.value,
+    remarks: remarks.value,
+    totalAmout: totalAmout,
+    date: getCurrentDate(),
+    time: getCurrentTime(),
+    items: itemListArr,
+  };
+
+  console.log(purchase_data);
+  // // Make a POST request to your API
+  // fetch("https://inventorymanaging.000webhostapp.com/add_purchase.php", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(purchase_data),
+  // })
+  //   .then((response) => response.json())
+  //   .then((responseData) => {
+  //     // Handle the response from the server
+  //     console.log(responseData);
+  //   })
+  //   .catch((error) => {
+  //     // Handle errors
+  //     console.error("Error:", error);
+  //   });
+});
+
+cancel_purchase.addEventListener("click", () => {
+  window.close();
 });

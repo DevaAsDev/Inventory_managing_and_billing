@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Purchase</title>
     <link rel="icon" type="image/x-icon" href="src/icon/farmfresh.png" />
     <link
@@ -11,210 +11,207 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
-   
+
     <link rel="stylesheet" href="src/css/billing/sub_purchase.css" />
     <!--<link rel="stylesheet" href="src/css/billing/purchase_popup.css" />-->
-</head>
-<body>
-    <div id="popWindow" class="popup" style="display: grid;">
-        <div id="popUpContainer" class="popContainer container-fluid bg-white">
-            <div id="clbtn" class="cls_btns">
-                <div class="purchase-heading"><h6>Add Purchase</h6></div>
-                <div id="close_x" class="close_x">X</div>
+  </head>
+  <body>
+    <div id="popWindow" class="popup" style="display: grid">
+      <div id="popUpContainer" class="popContainer container-fluid bg-white">
+        <div id="clbtn" class="cls_btns">
+          <div class="purchase-heading"><h6>Add Purchase</h6></div>
+        </div>
+        <div class="purchase-container">
+          <div class="box">
+            <div class="row">
+              <div class="col-25">
+                <label for="party">Party Name</label>
               </div>
-              <div class="purchase-container">
-                <div class="box">
-                  <div class="row">
-                    <div class="col-25">
-                      <label for="party">Party Name</label>
-                    </div>
-                    <div class="col-75">
-                      <select id="party" name="party">
-                        <option value="None">No Party</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-25">
-                      <label for="mNumber">Mobile No</label>
-                    </div>
-                    <div class="col-75">
-                      <input
-                        type="text"
-                        disabled
-                        style="border: none"
-                        id="mNumber"
-                        name="mNumber"
-                        placeholder="Mobile Number"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="box">
-                  <div class="row">
-                    <div class="col-25">
-                      <label for="bNumber">Bill No</label>
-                    </div>
-                    <div class="col-75">
-                      <input
-                        type="text"
-                        disabled
-                        style="border: none"
-                        id="bNumber"
-                        name="bNumber"
-                        placeholder="Bill Number"
-                      />
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-25">
-                      <label for="bDate">Date</label>
-                    </div>
-                    <div class="col-75">
-                      <input
-                        type="text"
-                        disabled
-                        style="border: none"
-                        id="bDate"
-                        name="bDate"
-                        placeholder="Bill Date"
-                      />
-                    </div>
-                  </div>
-                </div>
+              <div class="col-75">
+                <select id="party" name="party">
+                  <option value="None">No Party</option>
+                </select>
               </div>
-              
-              <div class="sub-container mt-4 d-flex justify-content-center">
-                <select id="search"
-                name="search"
-                placeholder="Add Items"></select>
+            </div>
+            <div class="row">
+              <div class="col-25">
+                <label for="mNumber">Mobile No</label>
               </div>
-              <div id="list-container" class="list-container mt-2">
-                <div class="row m-2">
-                  <div class="col-1 col-box">Sl.No</div>
-                  <div class="col-5 col-box">Item</div>
-                  <div class="col-2 col-box">QTY</div>
-                  <div class="col-1 col-box">UNIT</div>
-                  <div class="col-2 col-box">PRICE/UNIT</div>
-                  <div class="col-1 col-box">AMOUNT</div>
-                </div>
-              
-                <div id="itemList" class="listCont">
-                </div>
-            
+              <div class="col-75">
+                <input
+                  type="text"
+                  disabled
+                  style="border: none"
+                  id="mNumber"
+                  name="mNumber"
+                  placeholder="Mobile Number"
+                />
               </div>
-              
-              <div class="list-container pay_method">
-                <div class="lase-box col-6 p-5 pt-3">
-                  <div class="row">
-                    <div class="col-6">
-                      <label for="pType">Payment Type</label>
-                    </div>
-                    <div class="col-6">
-                      <select id="pType">
-                        <option value="C">Cash</option>
-                        <option value="IMPS">IMPS</option>
-                      </select>
-                    </div>
-                  </div>
-              
-                  <div class="row mt-4">
-                    <div class="col-4">
-                      <label for="remarks">Remarks</label>
-                    </div>
-                    <div class="col-8">
-                      <textarea id="remarks" name="remarks"></textarea>
-                    </div>
-                  </div>
+            </div>
+          </div>
+          <div class="box">
+            <div class="row">
+              <div class="col-25">
+                <label for="bNumber">Bill No</label>
+              </div>
+              <div class="col-75">
+                <input
+                  type="text"
+                  disabled
+                  style="border: none"
+                  id="bNumber"
+                  name="bNumber"
+                  placeholder="Bill Number"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-25">
+                <label for="bDate">Date</label>
+              </div>
+              <div class="col-75">
+                <input
+                  type="text"
+                  disabled
+                  style="border: none"
+                  id="bDate"
+                  name="bDate"
+                  placeholder="Bill Date"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
-                  <div class="row pt-3">
-                    <div class="col-6">
-                      <input
-                        id="remove"
-                        type="submit"
-                        value="Remove"
-                        style="width: 70%; padding: 10px;;"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="lase-box col-6 p-5 pt-3">
-                  <div class="row">
-                    <div class="col-6">
-                      <label for="btotal">Total</label>
-                    </div>
-                    <div class="col-6">
-                      <input
-                        type="text"
-                        disabled
-                        style="border: none" 
-                        id="btotal" 
-                        name="btotal"
-                        placeholder="0"
-                      />
-                    </div>
-                  </div>
-              
-                  <div class="row">
-                    <div class="col-6">
-                      <label for="discount">Discount</label>
-                    </div>
-                    <div class="col-6">
-                      <input type="text" id="discount" name="discount" value="0" />
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-6">
-                      <label for="pAmount">Payable Amount</label>
-                    </div>
-                    <div class="col-6">
-                      <input
-                        type="text"
-                        style="border: none"
-                        id="pAmount" disabled
-                        name="pAmount"
-                        placeholder="0"
-                      />
-                    </div>
-                  </div>
-              
-                  <div class="row">
-                    <div class="col-6">
-                      <label for="Paid">Paid</label>
-                    </div>
-                    <div class="col-6">
-                      <input
-                        type="text"
-                        style="border: none"
-                        id="paid"
-                        name="paid"
-                        placeholder="paid" value="0"
-                      />
-                    </div>
-                  </div>
-              
-                  <div class="row pt-3">
-                    <div class="col-6">
-                      <input
-                        id="cancel_purchase"
-                        type="submit"
-                        value="Cancel"
-                        style="width: 100%; padding: 10px"
-                      />
-                    </div>
-                    <div class="col-6">
-                      <input
-                        id="cancel_purchase"
-                        type="submit"
-                        value="Save"
-                        style="width: 100%; padding: 10px"
-                      />
-                    </div>
-                  </div>
-                </div>
+        <div class="sub-container mt-4 d-flex justify-content-center">
+          <select id="search" name="search" placeholder="Add Items"></select>
+        </div>
+        <div id="list-container" class="list-container mt-2">
+          <div class="row m-2">
+            <div class="col-1 col-box">Sl.No</div>
+            <div class="col-5 col-box">Item</div>
+            <div class="col-2 col-box">QTY</div>
+            <div class="col-1 col-box">UNIT</div>
+            <div class="col-2 col-box">PRICE/UNIT</div>
+            <div class="col-1 col-box">AMOUNT</div>
+          </div>
+
+          <div id="itemList" class="listCont"></div>
+        </div>
+
+        <div class="list-container pay_method">
+          <div class="lase-box col-6 p-5 pt-3">
+            <div class="row">
+              <div class="col-6">
+                <label for="pType">Payment Type</label>
               </div>
+              <div class="col-6">
+                <select id="pType">
+                  <option value="CASH">Cash</option>
+                  <option value="IMPS">IMPS</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-4">
+                <label for="remarks">Remarks</label>
+              </div>
+              <div class="col-8">
+                <textarea id="remarks" name="remarks"></textarea>
+              </div>
+            </div>
+
+            <div class="row pt-3">
+              <div class="col-6">
+                <input
+                  id="remove"
+                  type="submit"
+                  value="Remove"
+                  style="width: 70%; padding: 10px"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="lase-box col-6 p-5 pt-3">
+            <div class="row">
+              <div class="col-6">
+                <label for="btotal">Total (&#8377)</label>
+              </div>
+              <div class="col-6">
+                <input
+                  type="text"
+                  disabled
+                  style="border: none"
+                  id="btotal"
+                  name="btotal"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <label for="discount">Discount (&#8377)</label>
+              </div>
+              <div class="col-6">
+                <input type="text" id="discount" name="discount" value="0" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <label for="pAmount">Payable Amount (&#8377)</label>
+              </div>
+              <div class="col-6">
+                <input
+                  type="text"
+                  style="border: none"
+                  id="pAmount"
+                  disabled
+                  name="pAmount"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <label for="Paid">Paid (&#8377)</label>
+              </div>
+              <div class="col-6">
+                <input
+                  type="text"
+                  style="border: none"
+                  id="paid"
+                  name="paid"
+                  placeholder="paid"
+                  value="0"
+                />
+              </div>
+            </div>
+
+            <div class="row pt-3">
+              <div class="col-6">
+                <input
+                  id="cancel_purchase"
+                  type="submit"
+                  value="Cancel"
+                  style="width: 100%; padding: 10px"
+                />
+              </div>
+              <div class="col-6">
+                <input
+                  id="save_purchase"
+                  type="submit"
+                  value="Save"
+                  style="width: 100%; padding: 10px"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <script src="src/js/billing/sub_purchase.js"></script>
-</body>
+    </div>
+    <script src="src/js/billing/sub_purchase.js"></script>
+  </body>
 </html>
