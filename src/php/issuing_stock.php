@@ -37,20 +37,38 @@ if (!$conn) {
             $result = mysqli_stmt_execute($stmt);
 
             if ($result) {
-                $direc = 'OT';
+                $direc = 'OUT';
                 $query = "INSERT INTO stock_history(foreign_id, stock_quantity, direction, date, time, source) VALUES (?, ?, ?,CURDATE(), NOW(), ?)";
                 $stmt = mysqli_prepare($conn, $query);
                 mysqli_stmt_bind_param($stmt, "iiss", $id, $c_stock, $direc, $from);
 
                 $result = mysqli_stmt_execute($stmt);
                 if ($result) {
-                    $response = ['message' => 'Stock updated successfully'];
+                    if ($from == 'S-1') {
+                        $query = "UPDATE shopItems SET cStock = cStock + ? WHERE foreign_id = ?";
+                        $stmt = mysqli_prepare($conn, $query);
+
+                        $temp = (int) $c_stock;
+                        // Bind parameters
+                        mysqli_stmt_bind_param($stmt, "ii", $temp, $id);
+
+                        // Execute the statement
+                        $result = mysqli_stmt_execute($stmt);
+
+                        $result ? $response = ['message' => 'Stock updated successfully'] : $response = ['error' => 'Error updating stock to the database'];
+
+
+                    } else {
+                        $result ? $response = ['message' => 'Stock updated successfully'] : $response = ['error' => 'Error updating stock to the database'];
+                    }
+                    // Close the statement
+                    mysqli_stmt_close($stmt);
+
                 } else {
                     $response = ['error' => 'Error updating stock to the database'];
                 }
 
-                // Close the statement
-                mysqli_stmt_close($stmt);
+
             } else {
                 $response = ['error' => 'Error updating stock in the database'];
             }
@@ -65,4 +83,3 @@ if (!$conn) {
 
 }
 echo json_encode(['data' => $response], JSON_UNESCAPED_UNICODE);
-?>

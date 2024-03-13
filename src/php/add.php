@@ -14,7 +14,7 @@ $conn = mysqli_connect($server, $username, $password, $dbname);
 if (!$conn) {
     $response = ['error' => 'Unable to connect to the database'];
 } else {
-    $lats_id = fetchLatestIDFromDatabase($conn) + 1;
+    $lats_id = fetchLatestIDFromDatabase($conn);
     // Check if the request is a POST request
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Assuming the frontend sends data in JSON format

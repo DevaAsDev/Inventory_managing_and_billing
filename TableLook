@@ -35,10 +35,10 @@ CREATE TABLE shopItems (
     itemCode VARCHAR(255) NOT NULL,
     cStock INT NOT NULL,
     sku VARCHAR(255) NOT NULL,
-    FOREIGN KEY (foreign_id) REFERENCES items(id),
     unit VARCHAR(255),
     mrp INT NOT NULL,
-    sprice INT NOT NULL
+    sprice INT NOT NULL,
+    FOREIGN KEY (foreign_id) REFERENCES items(id)
 );
 
 CREATE TABLE shop_history (
