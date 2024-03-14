@@ -27,15 +27,16 @@ if (!$conn) {
         $branch = isset($data['branch']) ? mysqli_real_escape_string($conn, $data['branch']) : null;
         $holder = isset($data['holder']) ? mysqli_real_escape_string($conn, $data['holder']) : null;
         $date = isset($data['date']) ? mysqli_real_escape_string($conn, $data['date']) : null;
+        $code = isset($data['code']) ? mysqli_real_escape_string($conn, $data['code']) : null;
 
 
         // Check if all required fields are present
         if ($name !== null && $mNumber !== null) {
             // Prepare and bind the statement for updating
-            $query = "INSERT INTO party (name, number, place, fname, account, ifsi, branch, holder, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO party (name, number, place, fname, account, ifsi, branch, holder, date, code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($conn, $query);
             // Bind parameters
-            mysqli_stmt_bind_param($stmt, "sississss", $Name, $mNumber, $place, $fName, $accont, $ifsi, $branch, $holder, $date);
+            mysqli_stmt_bind_param($stmt, "sississss", $Name, $mNumber, $place, $fName, $accont, $ifsi, $branch, $holder, $date, $code);
             // Execute the statement
             $result = mysqli_stmt_execute($stmt);
             if ($result) {

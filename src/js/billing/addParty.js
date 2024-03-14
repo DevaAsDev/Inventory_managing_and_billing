@@ -1,204 +1,206 @@
-var addParty = document.getElementById("addparty");
+// var addParty = document.getElementById("add_party");
 
-addParty.addEventListener("click", () => {
-  var popWindow = document.getElementById("popWindow");
-  popWindow.style.display = "grid";
-  let popUpContainer = document.getElementById("popUpContainer");
+// addParty.addEventListener("click", () => {});
 
-  popUpContainer.innerHTML = `<div id="clbtn" class="cls_btn">X</div>
-  <div class="pb-1"><h6>Add Party</h6></div>
+// function addParty() {
+//   var popWindow = document.getElementById("popWindow");
+//   popWindow.style.display = "grid";
+//   let popUpContainer = document.getElementById("popUpContainer");
 
-  <div class="fcontainer">
-    <div class="row">
-      <div class="col-25">
-        <label for="name">Name*</label>
-      </div>
-      <div class="col-75">
-        <input type="text" id="name" name="Name" placeholder="Name" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="mNumber">Mobile No*</label>
-      </div>
-      <div class="col-75">
-        <input
-          type="text"
-          id="mNumber"
-          name="mNumber"
-          placeholder="Mobile Number"
-        />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="place">Place*</label>
-      </div>
-      <div class="col-75">
-        <input type="text" id="place" name="place" placeholder="Place" />
-      </div>
-    </div>
+//   popUpContainer.innerHTML = `<div id="clbtn" class="cls_btn">X</div>
+//   <div class="pb-1"><h6>Add Party</h6></div>
 
-    <div class="row">
-      <div class="col-25">
-        <label for="fname">Farm Name</label>
-      </div>
-      <div class="col-75">
-        <input
-          type="text"
-          id="fname"
-          name="fname"
-          placeholder="Farm Name"
-        />
-      </div>
-    </div>
+//   <div class="fcontainer">
+//     <div class="row">
+//       <div class="col-25">
+//         <label for="name">Name*</label>
+//       </div>
+//       <div class="col-75">
+//         <input type="text" id="name" name="Name" placeholder="Name" />
+//       </div>
+//     </div>
+//     <div class="row">
+//       <div class="col-25">
+//         <label for="mNumber">Mobile No*</label>
+//       </div>
+//       <div class="col-75">
+//         <input
+//           type="text"
+//           id="mNumber"
+//           name="mNumber"
+//           placeholder="Mobile Number"
+//         />
+//       </div>
+//     </div>
+//     <div class="row">
+//       <div class="col-25">
+//         <label for="place">Place*</label>
+//       </div>
+//       <div class="col-75">
+//         <input type="text" id="place" name="place" placeholder="Place" />
+//       </div>
+//     </div>
 
-    <hr />
+//     <div class="row">
+//       <div class="col-25">
+//         <label for="fname">Farm Name</label>
+//       </div>
+//       <div class="col-75">
+//         <input
+//           type="text"
+//           id="fname"
+//           name="fname"
+//           placeholder="Farm Name"
+//         />
+//       </div>
+//     </div>
 
-    <div class="row">
-      <div class="col-25">
-        <label for="aNumber">Account No</label>
-      </div>
-      <div class="col-75">
-        <input
-          type="text"
-          id="aNumber"
-          name="aNumber"
-          placeholder="Account Number"
-        />
-      </div>
-    </div>
+//     <hr />
 
-    <div class="row">
-      <div class="col-25">
-        <label for="ifsi">IFSI No</label>
-      </div>
-      <div class="col-75">
-        <input
-          type="text"
-          id="ifsi"
-          name="ifsi"
-          placeholder="IFSI Number"
-        />
-      </div>
-    </div>
+//     <div class="row">
+//       <div class="col-25">
+//         <label for="aNumber">Account No</label>
+//       </div>
+//       <div class="col-75">
+//         <input
+//           type="text"
+//           id="aNumber"
+//           name="aNumber"
+//           placeholder="Account Number"
+//         />
+//       </div>
+//     </div>
 
-    <div class="row">
-      <div class="col-25">
-        <label for="bName">Branch Name</label>
-      </div>
-      <div class="col-75">
-        <input
-          type="text"
-          id="bName"
-          name="bName"
-          placeholder="Branch Name"
-        />
-      </div>
-    </div>
+//     <div class="row">
+//       <div class="col-25">
+//         <label for="ifsi">IFSI No</label>
+//       </div>
+//       <div class="col-75">
+//         <input
+//           type="text"
+//           id="ifsi"
+//           name="ifsi"
+//           placeholder="IFSI Number"
+//         />
+//       </div>
+//     </div>
 
-    <div class="row">
-      <div class="col-25">
-        <label for="hName">Account Holder Name</label>
-      </div>
-      <div class="col-75">
-        <input
-          type="text"
-          id="hName"
-          name="hName"
-          placeholder="Account Holder"
-        />
-      </div>
-    </div>
+//     <div class="row">
+//       <div class="col-25">
+//         <label for="bName">Branch Name</label>
+//       </div>
+//       <div class="col-75">
+//         <input
+//           type="text"
+//           id="bName"
+//           name="bName"
+//           placeholder="Branch Name"
+//         />
+//       </div>
+//     </div>
 
-    <div class="row pt-5">
-      <input id="submit" type="submit" value="Add" />
-    </div>
-  </div>`;
+//     <div class="row">
+//       <div class="col-25">
+//         <label for="hName">Account Holder Name</label>
+//       </div>
+//       <div class="col-75">
+//         <input
+//           type="text"
+//           id="hName"
+//           name="hName"
+//           placeholder="Account Holder"
+//         />
+//       </div>
+//     </div>
 
-  let close_btn = document.getElementById("clbtn");
+//     <div class="row pt-5">
+//       <input id="submit" type="submit" value="Add" />
+//     </div>
+//   </div>`;
 
-  // Flag to track whether the click happened inside or outside the popUpContainer
-  let insideContainer = false;
+//   let close_btn = document.getElementById("clbtn");
 
-  popUpContainer.addEventListener("click", () => {
-    insideContainer = true;
-    // You can add additional logic if needed
-  });
+//   // Flag to track whether the click happened inside or outside the popUpContainer
+//   let insideContainer = false;
 
-  close_btn.addEventListener("click", () => {
-    // Check the flag to determine the click location
-    if (insideContainer) {
-      insideContainer = false; // Reset the flag
-    } else {
-      popWindow.style.display = "none";
-    }
-  });
+//   popUpContainer.addEventListener("click", () => {
+//     insideContainer = true;
+//     // You can add additional logic if needed
+//   });
 
-  popWindow.addEventListener("click", () => {
-    // Check the flag to determine the click location
-    if (insideContainer) {
-      insideContainer = false; // Reset the flag
-    } else {
-      popWindow.style.display = "none";
-    }
-  });
+//   close_btn.addEventListener("click", () => {
+//     // Check the flag to determine the click location
+//     if (insideContainer) {
+//       insideContainer = false; // Reset the flag
+//     } else {
+//       popWindow.style.display = "none";
+//     }
+//   });
 
-  let addPartyToServer = document.getElementById("submit");
+//   popWindow.addEventListener("click", () => {
+//     // Check the flag to determine the click location
+//     if (insideContainer) {
+//       insideContainer = false; // Reset the flag
+//     } else {
+//       popWindow.style.display = "none";
+//     }
+//   });
 
-  addPartyToServer.addEventListener("click", () => {
-    let fName = document.getElementById("name");
-    let mNumber = document.getElementById("mNumber");
-    let place = document.getElementById("place");
-    let farm = document.getElementById("fname");
+//   let addPartyToServer = document.getElementById("submit");
 
-    let aNumber = document.getElementById("aNumber");
-    let ifsi = document.getElementById("ifsi");
+//   addPartyToServer.addEventListener("click", () => {
+//     let fName = document.getElementById("name");
+//     let mNumber = document.getElementById("mNumber");
+//     let place = document.getElementById("place");
+//     let farm = document.getElementById("fname");
 
-    let bName = document.getElementById("bName");
-    let hName = document.getElementById("hName");
+//     let aNumber = document.getElementById("aNumber");
+//     let ifsi = document.getElementById("ifsi");
 
-    const party_data = {
-      name: fName,
-      number: mNumber,
-      place: place,
-      fName: farm,
-      aNum: aNumber,
-      ifsi: ifsi,
-      branch: bName,
-      holder: hName,
-      date: getCurrentDate(),
-    };
+//     let bName = document.getElementById("bName");
+//     let hName = document.getElementById("hName");
 
-    fetch("https://inventorymanaging.000webhostapp.com/add_party.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(party_data),
-    })
-      .then((response) => response.json())
-      .then((responseData) => {
-        // Handle the response from the server
-        console.log(responseData);
-        appendAlert("Stock Added!", "success");
-      })
-      .catch((error) => {
-        // Handle errors
-        console.error("Error:", error);
-        appendAlert(
-          "Faile to add item to database!. Check the network.",
-          "danger"
-        );
-      });
-  });
-});
+//     const party_data = {
+//       name: fName,
+//       number: mNumber,
+//       place: place,
+//       fName: farm,
+//       aNum: aNumber,
+//       ifsi: ifsi,
+//       branch: bName,
+//       holder: hName,
+//       date: getCurrentDate(),
+//     };
 
-function getCurrentDate() {
-  const now = new Date();
-  const dd = String(now.getDate()).padStart(2, "0");
-  const mm = String(now.getMonth() + 1).padStart(2, "0"); // Month is zero-based
-  const yy = String(now.getFullYear()).slice(-2);
+//     fetch("https://inventorymanaging.000webhostapp.com/add_party.php", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(party_data),
+//     })
+//       .then((response) => response.json())
+//       .then((responseData) => {
+//         // Handle the response from the server
+//         console.log(responseData);
+//         appendAlert("Stock Added!", "success");
+//       })
+//       .catch((error) => {
+//         // Handle errors
+//         console.error("Error:", error);
+//         appendAlert(
+//           "Faile to add item to database!. Check the network.",
+//           "danger"
+//         );
+//       });
+//   });
+// }
 
-  return dd + mm + yy;
-}
+// function getCurrentDate() {
+//   const now = new Date();
+//   const dd = String(now.getDate()).padStart(2, "0");
+//   const mm = String(now.getMonth() + 1).padStart(2, "0"); // Month is zero-based
+//   const yy = String(now.getFullYear()).slice(-2);
+
+//   return dd + mm + yy;
+// }
