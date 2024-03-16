@@ -3,17 +3,21 @@ let isPopUpMenuVisisble = false;
 
 let purchase = document.getElementById("purchase");
 
-let tempArr = [
-  { id: "1235658412", party: "Alpha", amout: "256", balance: "15" },
-  { id: "1235658413", party: "Alpha1", amout: "256", balance: "15" },
-  { id: "1235658414", party: "Alpha3", amout: "256", balance: "15" },
-];
-
 purchase.addEventListener("click", () => {
-  loadItems();
+  fetch("https://inventorymanaging.000webhostapp.com/get_purchase.php", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((purchase) => {
+      loadItems(purchase);
+    })
+    .catch((error) => console.error("Error:", error.message));
 });
 
-function loadItems() {
+function loadItems(items) {
   let items_container = document.getElementById("items_container");
 
   items_container.innerHTML = "";
@@ -38,15 +42,15 @@ function loadItems() {
     <div class="col-2 col-box" style="background-color: black;color: white;text-align: center;border:1px solid white;padding: 3px;vertical-align: middle;">BALANCE</div>
   </div>`;
 
-  tempArr.forEach((item, index) => {
+  items.data.forEach((item, index) => {
     let listDiv = document.createElement("div");
     listDiv.className = "row m-2 mt-0 mb-0 lists";
     listDiv.innerHTML = `
     <div class="col-1 col-box">${index + 1}</div>
     <div class="col-2 col-box">${item.id}</div>
     <div class="col-5 col-box">${item.party}</div>
-    <div class="col-2 col-box">AMOUNT</div>
-    <div class="col-2 col-box">BALANCE</div>`;
+    <div class="col-2 col-box">0</div>
+    <div class="col-2 col-box">0</div>`;
 
     item_list_container.appendChild(listDiv);
 

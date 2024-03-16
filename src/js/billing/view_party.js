@@ -50,7 +50,7 @@ function viewParty(partyData) {
             <label for="name">Name*</label>
           </div>
           <div class="col-75">
-            <input type="text" id="name" name="Name" placeholder="Name" />
+            <input type="text" id="name" name="name" placeholder="Name" />
           </div>
         </div>
         <div class="row">
@@ -91,6 +91,20 @@ function viewParty(partyData) {
     
         <hr />
     
+        <div class="row">
+          <div class="col-25">
+            <label for="gstin">GSTIN</label>
+          </div>
+          <div class="col-75">
+            <input
+              type="text"
+              id="gstin"
+              name="gstin"
+              placeholder="GSTIN"
+            />
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-25">
             <label for="aNumber">Account No</label>
@@ -183,16 +197,19 @@ function viewParty(partyData) {
       let addPartyToServer = document.getElementById("submit");
 
       addPartyToServer.addEventListener("click", () => {
-        let fName = document.getElementById("name");
-        let mNumber = document.getElementById("mNumber");
-        let place = document.getElementById("place");
-        let farm = document.getElementById("fname");
+        let fName = document.getElementById("name").value;
+        let mNumber = document.getElementById("mNumber").value;
+        let place = document.getElementById("place").value;
+        let farm = document.getElementById("fname").value;
 
-        let aNumber = document.getElementById("aNumber");
-        let ifsi = document.getElementById("ifsi");
+        let gstin = document.getElementById("gstin").value;
+        let aNumber = document.getElementById("aNumber").value;
+        let ifsi = document.getElementById("ifsi").value;
 
-        let bName = document.getElementById("bName");
-        let hName = document.getElementById("hName");
+        let bName = document.getElementById("bName").value;
+        let hName = document.getElementById("hName").value;
+
+        let secCode = "P" + generateUniqueCode(existingCodes);
 
         const party_data = {
           name: fName,
@@ -203,9 +220,21 @@ function viewParty(partyData) {
           ifsi: ifsi,
           branch: bName,
           holder: hName,
+          gstin: gstin,
           date: getCurrentDate(),
-          code: "P" + generateUniqueCode(),
+          code: secCode,
         };
+
+        console.log(party_data);
+
+        console.log(fName);
+        console.log(mNumber);
+        console.log(place);
+        console.log(partyData);
+        console.log(partyData);
+        console.log(partyData);
+        console.log(partyData);
+        console.log(partyData);
 
         fetch("https://inventorymanaging.000webhostapp.com/add_party.php", {
           method: "POST",
@@ -218,6 +247,7 @@ function viewParty(partyData) {
           .then((responseData) => {
             // Handle the response from the server
             console.log(responseData);
+            popWindow.style.display = "none";
             //appendAlert("Stock Added!", "success");
           })
           .catch((error) => {

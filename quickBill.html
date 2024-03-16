@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Purchase</title>
+    <title>Quick Bill</title>
     <link rel="icon" type="image/x-icon" href="src/icon/farmfresh.png" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -13,38 +13,33 @@
     />
 
     <link rel="stylesheet" href="src/css/billing/sub_purchase.css" />
-    <!--<link rel="stylesheet" href="src/css/billing/purchase_popup.css" />-->
   </head>
   <body>
     <div id="popWindow" class="popup" style="display: grid">
       <div id="popUpContainer" class="p-container container-fluid bg-white">
         <div id="clbtn" class="cls_btns">
-          <div class="purchase-heading"><h6>Add Purchase</h6></div>
+          <div class="purchase-heading"><h6>Quick Billing</h6></div>
         </div>
         <div class="purchase-container">
           <div class="box">
-            <div class="row">
-              <div class="col-25">
-                <label for="party">Party Name</label>
+            <div class="row m-1">
+              <div class="col-5">
+                <label for="name">Customer Name</label>
               </div>
-              <div class="col-75">
-                <select id="party" name="party">
-                  <option value="None">No Party</option>
-                </select>
+              <div class="col-7">
+                <input type="text" id="name" name="name">
               </div>
             </div>
-            <div class="row">
-              <div class="col-25">
+            <div class="row m-1">
+              <div class="col-5">
                 <label for="mNumber">Mobile No</label>
               </div>
-              <div class="col-75">
+              <div class="col-7">
                 <input
                   type="text"
-                  disabled
-                  style="border: none"
                   id="mNumber"
-                  name="mNumber"
-                  placeholder="Mobile Number"
+                  name="mNumber" 
+                  placeholder="+91XXXXXXXXXX"
                 />
               </div>
             </div>
@@ -76,6 +71,7 @@
                   style="border: none"
                   id="bDate"
                   name="bDate"
+                  value="DD/MM/YYYY"
                   placeholder="Bill Date"
                 />
               </div>
@@ -103,12 +99,13 @@
           <div class="lase-box col-6 p-5 pt-3">
             <div class="row">
               <div class="col-6">
-                <label for="pType">Payment Type</label>
+                <label for="pType">Payment Mode</label>
               </div>
               <div class="col-6">
                 <select id="pType">
                   <option value="CASH">Cash</option>
-                  <option value="IMPS">IMPS</option>
+                  <option value="UPI">UPI</option>
+                  <option value="POS">POS</option>
                 </select>
               </div>
             </div>
@@ -152,13 +149,13 @@
 
             <div class="row">
               <div class="col-6">
-                <label for="discount">Discount (&#8377)</label>
+                <label for="discount">Bill Discount (&#8377)</label>
               </div>
               <div class="col-6">
                 <input type="text" id="discount" name="discount" value="0" />
               </div>
             </div>
-            <div class="row">
+            <div class="row" style="display: none;">
               <div class="col-6">
                 <label for="pAmount">Payable Amount (&#8377)</label>
               </div>
@@ -176,12 +173,12 @@
 
             <div class="row">
               <div class="col-6">
-                <label for="Paid">Paid (&#8377)</label>
+                <label for="Paid">Amount Received (&#8377)</label>
               </div>
               <div class="col-6">
                 <input
                   type="text"
-                  style="border: none"
+                  style="border: none" disabled
                   id="paid"
                   name="paid"
                   placeholder="paid"
@@ -212,6 +209,6 @@
         </div>
       </div>
     </div>
-    <script src="src/js/billing/sub_purchase.js"></script>
+    <script src="src/js/billing/quickBill.js"></script>
   </body>
 </html>

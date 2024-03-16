@@ -10,56 +10,29 @@ let party_id = 0;
 fetchPartyData();
 
 function fetchPartyData() {
-  fetch("https://inventorymanaging.000webhostapp.com/get_party.php", {
+  fetch("https://inventorymanaging.000webhostapp.com/shopItems.php", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   })
     .then((response) => response.json())
-    .then((data) => {
-      fetch("https://inventorymanaging.000webhostapp.com/shopItems.php", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((purchase) => {
-          show_purchase_winsow(data, purchase);
-        })
-        .catch((error) => console.error("Error:", error.message));
+    .then((item) => {
+      show_item_window(item);
     })
     .catch((error) => console.error("Error:", error.message));
 }
 
-function show_purchase_winsow(partyData, items) {
+function show_item_window(items) {
   let popWindow = document.getElementById("popWindow");
   popWindow.style.display = "grid";
   let popUpContainer = document.getElementById("popUpContainer");
   popUpContainer.classList.remove("popContainer");
   popUpContainer.classList.add("p-container");
 
-  let party = document.getElementById("party");
   let billDate = document.getElementById("bDate");
   let billNumber = document.getElementById("bNumber");
-  let mobileNum = document.getElementById("mNumber");
   let search = document.getElementById("search");
-
-  partyData.data.forEach((item) => {
-    let optionElement = document.createElement("option");
-    optionElement.value = item.item_id;
-    optionElement.text = item.name;
-    party.appendChild(optionElement);
-  });
-
-  party.addEventListener("change", function (event) {
-    let ob = partyData.data.find((item) => item.item_id === event.target.value);
-    mobileNum.value = ob.number;
-    mobileNumber = ob.number;
-    party_name = ob.name;
-    party_id = ob.code;
-  });
 
   let primeFlag = true;
 
@@ -133,7 +106,7 @@ function show_purchase_winsow(partyData, items) {
   });
 
   billDate.value = getCurrentDateWith();
-  billNumber.value = generateUniqueCode(existingCodes);
+  billNumber.value = "S" + generateUniqueCode(existingCodes);
 
   // function findObjectById(id) {
   //   return response.data.find((item) => item.item_id === id);
@@ -367,9 +340,10 @@ let save_purchase = document.getElementById("save_purchase");
 let cancel_purchase = document.getElementById("cancel_purchase");
 
 save_purchase.addEventListener("click", () => {
+  let name = document.getElementById("name").value;
+  let mobileNum = document.getElementById("mNumber").value;
   let bNumber = document.getElementById("bNumber");
 
-  let pAmount = document.getElementById("pAmount");
   let discount = document.getElementById("discount");
   let paid = document.getElementById("paid");
 
@@ -379,10 +353,8 @@ save_purchase.addEventListener("click", () => {
 
   const purchase_data = {
     bId: bNumber.value,
-    pId: party_id,
-    pName: party_name,
-    pNumber: mobileNumber,
-    pAmount: pAmount.value,
+    pName: name,
+    pNumber: mobileNum,
     discount: discount.value,
     paid: paid.value,
     pType: pType.value,
@@ -394,7 +366,7 @@ save_purchase.addEventListener("click", () => {
   };
 
   // Make a POST request to your API
-  fetch("https://inventorymanaging.000webhostapp.com/add_purchase.php", {
+  fetch("https://inventorymanaging.000webhostapp.com/add_sales.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

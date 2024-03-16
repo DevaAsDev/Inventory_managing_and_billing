@@ -27,5 +27,4 @@ if (!$conn) {
 }
 
 echo json_encode($response);
-exit
-    ?>
+exit;

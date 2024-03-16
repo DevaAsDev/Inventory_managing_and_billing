@@ -88,7 +88,7 @@ function show_popup(items) {
   let name = document.getElementById("name");
   let cStock = document.getElementById("cStock");
   let issuing_stock = document.getElementById("issuing_stock");
-  let nStock = document.getElementById(nStock);
+  let nStock = document.getElementById("nStock");
   let to = document.getElementById("to");
 
   items.data.forEach((item) => {

@@ -15,7 +15,7 @@ if (!$conn) {
     $response = ['error' => 'Unable to connect to the database'];
 } else {
 
-    $query = "SELECT * FROM shopItems";
+    $query = "SELECT * FROM shopItems ORDER BY name";
     $result = mysqli_query($conn, $query);
 
     if ($result) {
