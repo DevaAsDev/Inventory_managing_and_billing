@@ -210,5 +210,26 @@
       </div>
     </div>
     <script src="src/js/billing/quickBill.js"></script>
+
+    <script>
+      // Function to remove the div element
+      function removePoweredByDiv() {
+        // Find the div element to remove
+        var divToRemove = document.querySelector(
+          'div[style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"]'
+        );
+
+        // Check if the div element exists
+        if (divToRemove) {
+          // Remove the div element from the DOM
+          divToRemove.remove();
+        }
+      }
+
+      // Wait for the page to fully load before removing the div
+      window.onload = function () {
+        removePoweredByDiv();
+      };
+    </script>
   </body>
 </html>

@@ -289,7 +289,7 @@ function viewParty(partyData) {
     <div class="col-1 col-box">${index + 1}</div>
     <div class="col-2 col-box">${item.item_id}</div>
     <div class="col-5 col-box">${item.name}</div>
-    <div class="col-2 col-box">${item.mNumber}</div>
+    <div class="col-2 col-box">${item.number}</div>
     <div class="col-2 col-box">${item.balance}</div>`;
 
     item_list_container.appendChild(listDiv);

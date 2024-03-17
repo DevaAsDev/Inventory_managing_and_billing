@@ -32,7 +32,7 @@ if (!$conn) {
         $time = isset ($data['time']) ? mysqli_real_escape_string($conn, $data['time']) : null;
 
         // Check if all required fields are present
-        if ($bId !== null && $pId !== null) {
+        if ($bId !== null) {
 
 
             // Prepare and bind the statement for updating
