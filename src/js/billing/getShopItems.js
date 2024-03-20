@@ -131,6 +131,7 @@ function showPopUp(item) {
   let popUpContainer = document.getElementById("popUpContainer");
   popUpContainer.classList.add("popUpContainer");
 
+  let temName = item.name;
   popUpContainer.innerHTML = `
   <div id="clbtn" class="cls_btn">X</div>
         <div class="pb-1"><h6>Add Stock</h6></div>
@@ -141,7 +142,7 @@ function showPopUp(item) {
               <label for="name">Name</label>
             </div>
             <div class="col-75">
-              <input type="text" value=${item.name}  disabled style="border: none;" id="name" name="Name" placeholder="Name" />
+              <input type="text" value=${temName}  disabled style="border: none;" id="name" name="Name" placeholder="Name" />
             </div>
           </div>
           <div class="row">
@@ -220,6 +221,11 @@ function showPopUp(item) {
           </div>
         </div>
         `;
+
+  let inputElement = document.getElementById("name");
+
+  // Set the value attribute using setAttribute and properly escape the content
+  inputElement.setAttribute("value", temName);
 
   let submit_stock = document.getElementById("submit_stock");
   submit_stock.addEventListener("click", () => {
