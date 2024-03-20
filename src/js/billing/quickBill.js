@@ -127,7 +127,7 @@ function getDiscount() {
       pAmount.value = parseInt(addTotal()) - parseInt(val);
     }
   });
-  let pAmount = document.getElementById("pAmount");
+  let pAmount = document.getElementById("received");
   pAmount.value = parseInt(addTotal()) - parseInt(discount.value);
 }
 
@@ -345,7 +345,7 @@ save_purchase.addEventListener("click", () => {
   let bNumber = document.getElementById("bNumber");
 
   let discount = document.getElementById("discount");
-  let paid = document.getElementById("paid");
+  let paid = document.getElementById("received");
 
   let pType = document.getElementById("pType");
   let remarks = document.getElementById("remarks");

@@ -62,14 +62,41 @@ if (!$conn) {
                         $total = isset ($item['total']) ? $item['total'] : null;
 
                         // Perform database operations for each item
-                        // Example: Insert into database or perform other operations
                         $querys = "INSERT INTO salesList (bId, name, foreign_id, itemCode, quantity, sku, price, unit, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
                         $stmt = mysqli_prepare($conn, $querys);
                         mysqli_stmt_bind_param($stmt, "ssisdsdsd", $bId, $itemName, $foreignId, $itemCode, $quantity, $sku, $sprice, $unit, $total);
                         // Execute the statement
                         $result = mysqli_stmt_execute($stmt);
                         if ($result) {
-                            $response = ['data' => 'sales added successfully'];
+                            $queryf = "UPDATE shopItems SET cStock = cStock - ? WHERE foreign_id = ?";
+                            $stmt = mysqli_prepare($conn, $queryf);
+
+                            $temp = (int) $quantity;
+                            // Bind parameters
+                            mysqli_stmt_bind_param($stmt, "ii", $temp, $foreignId);
+                            // Execute the statement
+                            $result = mysqli_stmt_execute($stmt);
+                            if ($result) {
+                                $direc = 'SALES';
+                                $source = "CUSTOMER";
+                                $query = "INSERT INTO shop_history(foreign_id, stock_quantity, direction, date, time, source) VALUES (?, ?, ?,?, ?, ?)";
+                                $stmt = mysqli_prepare($conn, $query);
+                                mysqli_stmt_bind_param($stmt, "iissss", $foreignId, $temp, $direc, $date, $time, $source);
+
+                                $result = mysqli_stmt_execute($stmt);
+                                if ($result) {
+                                    $response = ['message' => 'sales added successfully'];
+                                } else {
+                                    $response = ['error' => 'Something went wrong!'];
+                                }
+
+                                // Close the statement
+                                mysqli_stmt_close($stmt);
+                            } else {
+                                $response = ['error' => 'Error'];
+                            }
+                            //$result ? $response = ['message' => 'sales added successfully'] : $response = ['error' => 'Failed to add sales'];
+
                         } else {
                             $response = ['error' => 'Failed to add sales'];
                         }
@@ -80,8 +107,6 @@ if (!$conn) {
             } else {
                 $response = ['error' => 'Invalid operation'];
             }
-            mysqli_stmt_close($stmt);
-
 
 
         } else {

@@ -16,12 +16,12 @@ function fetchSales() {
   })
     .then((response) => response.json())
     .then((data) => {
-      viewParty(data);
+      viewSales(data);
     })
     .catch((error) => console.error("Error:", error.message));
 }
 
-function viewParty(partyData) {
+function viewSales(partyData) {
   let items_container = document.getElementById("items_container");
 
   items_container.innerHTML = "";

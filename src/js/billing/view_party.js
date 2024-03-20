@@ -270,6 +270,9 @@ function viewParty(partyData) {
       return dd + mm + yy;
     }
   });
+
+  //end of the onClick function of add party btn
+
   let item_list_container = document.getElementById("party-list-container");
 
   item_list_container.innerHTML = "";
@@ -282,12 +285,13 @@ function viewParty(partyData) {
     <div class="col-2 col-box" style="background-color: black;color: white;text-align: center;border:1px solid white;padding: 3px;vertical-align: middle;">BALANCE</div>
   </div>`;
 
+  console.table(partyData.Date);
   partyData.data.forEach((item, index) => {
     let listDiv = document.createElement("div");
     listDiv.className = "row m-2 mt-0 mb-0 lists";
     listDiv.innerHTML = `
     <div class="col-1 col-box">${index + 1}</div>
-    <div class="col-2 col-box">${item.item_id}</div>
+    <div class="col-2 col-box">${item.code}</div>
     <div class="col-5 col-box">${item.name}</div>
     <div class="col-2 col-box">${item.number}</div>
     <div class="col-2 col-box">${item.balance}</div>`;

@@ -14,11 +14,21 @@ function getData() {
 }
 
 function displayItemList(response) {
-  const itemContainer = document.getElementById("items_container");
+  let items_container = document.getElementById("items_container");
+
+  items_container.innerHTML = "";
+
+  items_container.innerHTML = `<div class="purchase-header">
+    <!--<button id="add_party" class="p-btn" style="color:white;">Add Party</button>-->
+    </div>
+    <hr />
+    <div id="party-list-container" class="purchase-list-container"/>`;
+
+  const itemContainer = document.getElementById("party-list-container");
   // Clear previous content
   itemContainer.innerHTML = "";
-
   const titleDiv = document.createElement("div");
+
   titleDiv.classList.add(
     "item",
     "d-flex",

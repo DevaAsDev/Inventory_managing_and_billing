@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button
+      id="usbButton"
+      style="margin: 500px 500px"
+      onclick="handleConnectButtonClick()"
+    >
+      Connect USB Device
+    </button>
+
+    <script src="dist/webusb-receipt-printer.umd.js"></script>
+    <script src="dist/thermal-printer-encoder.umd.js"></script>
+
+    <script>
+      const receiptPrinter = new WebUSBReceiptPrinter();
+
+      let lastUsedDevice;
+
+      function handleConnectButtonClick() {
+        receiptPrinter.connect();
+      }
+
+      //receiptPrinter.reconnect(lastUsedDevice);
+
+      receiptPrinter.addEventListener("connected", (device) => {
+        console.log(
+          `Connected to ${device.manufacturerName} ${device.productName} (#${device.serialNumber})`
+        );
+
+        printerLanguage = device.language;
+        printerCodepageMapping = device.codepageMapping;
+
+        /* Store device for reconnecting */
+        lastUsedDevice = device;
+
+        /* Encode the receipt */
+
+        let encoder = new ThermalPrinterEncoder({
+          language: printerLanguage,
+          codepageMapping: printerCodepageMapping,
+        });
+
+        let data = encoder
+          .initialize()
+          .text("The quick brown fox jumps over the lazy dog")
+          .newline()
+          .qrcode("https://nielsleenheer.com")
+          .encode();
+
+        /* Print the receipt */
+
+        receiptPrinter.print(data);
+      });
+    </script>
+  </body>
+</html>

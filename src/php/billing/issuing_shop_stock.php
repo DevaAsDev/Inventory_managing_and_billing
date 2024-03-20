@@ -17,19 +17,19 @@ if (!$conn) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data = json_decode(file_get_contents("php://input"), true);
 
-        $previous = isset($data['previous']) ? mysqli_real_escape_string($conn, $data['previous']) : null;
-        $c_stock = isset($data['stock']) ? mysqli_real_escape_string($conn, $data['stock']) : null;
-        $id = isset($data['id']) ? mysqli_real_escape_string($conn, $data['id']) : null;
-        $f_id = isset($data['fid']) ? mysqli_real_escape_string($conn, $data['fid']) : null;
-        $source = isset($data['source']) ? mysqli_real_escape_string($conn, $data['source']) : null;
-        $date = isset($data['date']) ? mysqli_real_escape_string($conn, $data['date']) : null;
-        $time = isset($data['time']) ? mysqli_real_escape_string($conn, $data['time']) : null;
+        $previous = isset ($data['previous']) ? mysqli_real_escape_string($conn, $data['previous']) : null;
+        $c_stock = isset ($data['stock']) ? mysqli_real_escape_string($conn, $data['stock']) : null;
+        $id = isset ($data['id']) ? mysqli_real_escape_string($conn, $data['id']) : null;
+        $f_id = isset ($data['fid']) ? mysqli_real_escape_string($conn, $data['fid']) : null;
+        $source = isset ($data['source']) ? mysqli_real_escape_string($conn, $data['source']) : null;
+        $date = isset ($data['date']) ? mysqli_real_escape_string($conn, $data['date']) : null;
+        $time = isset ($data['time']) ? mysqli_real_escape_string($conn, $data['time']) : null;
 
-        $t_stock = (int) $previous - (int) $c_stock;
+        // $t_stock = (int) $previous - (int) $c_stock;
 
-        $query = "UPDATE shopItems SET cStock = ? WHERE id = ?";
+        $query = "UPDATE shopItems SET cStock = cStock - ? WHERE id = ?";
         $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, "ii", $t_stock, $id);
+        mysqli_stmt_bind_param($stmt, "ii", $c_stock, $id);
 
         // Execute the statement
         $result = mysqli_stmt_execute($stmt);
